@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.derrick.studyr.Profile"
+    tools:showIn="@layout/activity_profile">
+
+        <ImageButton
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:id="@+id/imageButton3"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Name"
+            android:id="@+id/textView18"
+            android:layout_below="@+id/imageButton3"
+            android:layout_alignLeft="@+id/imageButton3"
+            android:layout_alignStart="@+id/imageButton3"
+            android:editable="false"
+            android:clickable="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Details"
+            android:id="@+id/textView19"
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/textView18"
+            android:layout_alignStart="@+id/textView18" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="More Details"
+            android:id="@+id/textView20"
+            android:layout_below="@+id/textView19"
+            android:layout_alignLeft="@+id/textView19"
+            android:layout_alignStart="@+id/textView19" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Few more Details"
+            android:id="@+id/textView21"
+            android:layout_below="@+id/textView20"
+            android:layout_alignLeft="@+id/textView20"
+            android:layout_alignStart="@+id/textView20" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Might still need more"
+            android:id="@+id/textView22"
+            android:layout_below="@+id/textView21"
+            android:layout_alignLeft="@+id/textView21"
+            android:layout_alignStart="@+id/textView21" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Still more"
+            android:id="@+id/textView23"
+            android:layout_below="@+id/textView22"
+            android:layout_alignLeft="@+id/textView22"
+            android:layout_alignStart="@+id/textView22" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="I think that&apos;s enough...?"
+            android:id="@+id/textView24"
+            android:layout_below="@+id/textView23"
+            android:layout_alignLeft="@+id/textView23"
+            android:layout_alignStart="@+id/textView23" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:spinnerMode="dropdown"
+            android:entries="@array/pagesP" />
+</RelativeLayout>

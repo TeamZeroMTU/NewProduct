@@ -1,4 +1,23 @@
 <resources>
     <string name="app_name">Studyr</string>
     <string name="action_settings">Settings</string>
+
+    <string-array name="pagesH">
+        <item>Home</item>
+        <item>Profile</item>
+        <item>Messaging</item>
+    </string-array>
+    <string-array name="pagesP">
+        <item>Profile</item>
+        <item>Home</item>
+        <item>Messaging</item>
+    </string-array>
+    <string-array name="pagesM">
+        <item>Messaging</item>
+        <item>Home</item>
+        <item>Profile</item>
+    </string-array>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_activity_messaging">Messaging</string>
 </resources>
