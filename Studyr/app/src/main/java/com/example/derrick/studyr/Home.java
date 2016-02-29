@@ -26,16 +26,13 @@ public class Home extends AppCompatActivity {
 
                     TextView text = (TextView) view;
                     if (text.getText().equals("Profile"))
-
                         toProfile();
                     if (text.getText().equals("Messaging"))
                         toMessaging();
-                    //  Toast.makeText(MainActivity.this,"quit being a little bitch " + text.getText(), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView parent) {
-                    // setContentView(R.layout.profile_page);
 
                 }
             });
@@ -44,14 +41,12 @@ public class Home extends AppCompatActivity {
     public void toProfile()
     {
         Intent change = new Intent(this, Profile.class);
-       // setContentView(R.layout.activity_profile);
         startActivity(change);
     }
 
     public void toMessaging()
     {
         Intent change = new Intent(this, Messaging.class);
-        //setContentView(R.layout.activity_messaging);
         startActivity(change);
     }
 

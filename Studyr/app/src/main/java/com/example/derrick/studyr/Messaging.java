@@ -31,12 +31,10 @@ public class Messaging extends AppCompatActivity {
                     if (text.getText().equals("Profile")) {
                         toProfile();
                     }
-                    //  Toast.makeText(MainActivity.this,"quit being a little bitch " + text.getText(), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView parent) {
-                    // setContentView(R.layout.profile_page);
 
                 }
             });
@@ -46,14 +44,12 @@ public class Messaging extends AppCompatActivity {
     public void toHome()
     {
         Intent change = new Intent(this, Home.class);
-       // setContentView(R.layout.activity_home);
         startActivity(change);
     }
 
     public void toProfile()
     {
         Intent change = new Intent(this, Profile.class);
-       // setContentView(R.layout.activity_profile);
         startActivity(change);
     }
 }
