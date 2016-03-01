@@ -27,4 +27,5 @@
     <string name="title_activity_home">Home</string>
     <string name="title_activity_messaging">Messaging</string>
     <string name="title_activity_send_messeage">SendMesseage</string>
+    <string name="title_activity_matchmaking">Matchmaking</string>
 </resources>

@@ -52,4 +52,11 @@ public class Home extends AppCompatActivity {
         finish();
     }
 
+    public void toMatchmaking(View view)
+    {
+        Intent change = new Intent(this, Matchmaking.class);
+        startActivity(change);
+        finish();
+    }
+
 }

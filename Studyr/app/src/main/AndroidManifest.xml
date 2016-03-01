@@ -33,6 +33,10 @@
         <activity
             android:name=".SendMesseage"
             android:label="@string/title_activity_send_messeage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Matchmaking"
+            android:label="@string/title_activity_matchmaking"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
