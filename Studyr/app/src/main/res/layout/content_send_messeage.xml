@@ -9,36 +9,27 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.derrick.studyr.Messaging"
-    tools:showIn="@layout/activity_messaging">
+    tools:context="com.example.derrick.studyr.SendMesseage"
+    tools:showIn="@layout/activity_send_messeage">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Messaging Manager"
-        android:id="@+id/textView12"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/spinner"
-        android:layout_centerHorizontal="true" />
+        android:text="Their Name"
+        android:id="@+id/PersonName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-    <Spinner
+    <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        android:spinnerMode="dropdown"
-        android:entries="@array/pagesM"
-        android:focusable="true"
+        android:text="Back"
+        android:id="@+id/back"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/messages"
-        android:layout_below="@+id/textView12"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:entries="@array/messages"/>
+        android:onClick="back"/>
 </RelativeLayout>

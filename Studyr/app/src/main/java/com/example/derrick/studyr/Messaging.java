@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,8 +20,7 @@ public class Messaging extends AppCompatActivity {
         setContentView(R.layout.activity_messaging);
 
         Spinner dropdown = (Spinner) findViewById(R.id.spinner);
-            dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView parent, View view, int position, long id) {
 
@@ -39,18 +39,44 @@ public class Messaging extends AppCompatActivity {
                 }
             });
 
+        ListView matches = (ListView) findViewById(R.id.messages);
+        matches.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView txt = (TextView) view;
+                String name = (String) txt.getText();
+                viewMessage(name);
+            }
+        });
     }
 
     public void toHome()
     {
         Intent change = new Intent(this, Home.class);
         startActivity(change);
+        finish();
     }
 
     public void toProfile()
     {
         Intent change = new Intent(this, Profile.class);
         startActivity(change);
+        finish();
+    }
+
+    public void viewMessage(String s)
+    {
+        Intent message = new Intent(this, SendMesseage.class);
+        message.putExtra("name",s);
+        startActivity(message);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent back = new Intent(this,Home.class);
+        startActivity(back);
+        finish();
     }
 }
 

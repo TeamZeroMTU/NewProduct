@@ -42,12 +42,14 @@ public class Home extends AppCompatActivity {
     {
         Intent change = new Intent(this, Profile.class);
         startActivity(change);
+        finish();
     }
 
     public void toMessaging()
     {
         Intent change = new Intent(this, Messaging.class);
         startActivity(change);
+        finish();
     }
 
 }

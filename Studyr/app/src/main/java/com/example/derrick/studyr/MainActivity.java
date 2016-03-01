@@ -21,53 +21,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // setContentView(R.layout.profile_page);
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
-        Spinner dropdown = (Spinner) findViewById(R.id.spinner);
-        if(dropdown != null) {
-            dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-                @Override
-                public void onItemSelected(AdapterView parent, View view, int position, long id) {
-
-                    TextView text = (TextView) view;
-                    if(text.getText().equals("Profile"))
-                        setContentView(R.layout.profile_page);
-                    //if(text.getText().equals("Home"))
-                    //    setContentView(R.layout.temp_home);
-                    if(text.getText().equals("Messaging"))
-                        setContentView(R.layout.message_manager);
-                  //  Toast.makeText(MainActivity.this,"quit being a little bitch " + text.getText(), Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView parent) {
-                   // setContentView(R.layout.profile_page);
-
-                }
-            });
-        }
-
-
     }
 
     public void changePage(View view)
     {
         Intent change = new Intent(this, Home.class);
-       // setContentView(R.layout.activity_home);
         startActivity(change);
+        finish();
 
     }
 

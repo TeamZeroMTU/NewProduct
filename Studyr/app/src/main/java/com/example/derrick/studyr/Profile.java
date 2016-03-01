@@ -50,11 +50,19 @@ public class Profile extends AppCompatActivity {
    {
        Intent change = new Intent(this, Home.class);
        startActivity(change);
+       finish();
    }
 
     public void toMessaging()
     {
         Intent change = new Intent(this, Messaging.class);
         startActivity(change);
+        finish();
+    }
+    @Override
+    public void onBackPressed() {
+        Intent back = new Intent(this,Home.class);
+        startActivity(back);
+        finish();
     }
 }
