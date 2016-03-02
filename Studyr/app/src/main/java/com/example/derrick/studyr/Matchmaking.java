@@ -17,6 +17,7 @@ public class Matchmaking extends AppCompatActivity {
 
     }
 
+    // Overrides the phones back button correctly move back to the home page
     @Override
     public void onBackPressed() {
         Intent back = new Intent(this,Home.class);

@@ -39,6 +39,7 @@ public class Messaging extends AppCompatActivity {
                 }
             });
 
+        // Finds the list view and sets a listener
         ListView matches = (ListView) findViewById(R.id.messages);
         matches.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -50,6 +51,7 @@ public class Messaging extends AppCompatActivity {
         });
     }
 
+    // Methods move to different layouts
     public void toHome()
     {
         Intent change = new Intent(this, Home.class);
@@ -72,6 +74,7 @@ public class Messaging extends AppCompatActivity {
         finish();
     }
 
+    // Overrides the phones back button to go back to the home page
     @Override
     public void onBackPressed() {
         Intent back = new Intent(this,Home.class);

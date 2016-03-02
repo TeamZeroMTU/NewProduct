@@ -25,6 +25,7 @@ public class SendMesseage extends AppCompatActivity {
 
     }
 
+    // Method for when the button in the layout is clicked
     public void back(View view)
     {
 
@@ -33,6 +34,7 @@ public class SendMesseage extends AppCompatActivity {
         finish();
     }
 
+    // Override the phones back button to just move back to the messaging manager layout
     @Override
     public void onBackPressed() {
         Intent back = new Intent(this,Messaging.class);

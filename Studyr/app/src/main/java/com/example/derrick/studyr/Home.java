@@ -21,6 +21,7 @@ public class Home extends AppCompatActivity {
         Spinner dropdown = (Spinner) findViewById(R.id.spinner);
             dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+                // Creates the listener for the spinner to respond to selected items
                 @Override
                 public void onItemSelected(AdapterView parent, View view, int position, long id) {
 
@@ -38,6 +39,7 @@ public class Home extends AppCompatActivity {
             });
     }
 
+    // Methods are used to transition to the different layouts
     public void toProfile()
     {
         Intent change = new Intent(this, Profile.class);
