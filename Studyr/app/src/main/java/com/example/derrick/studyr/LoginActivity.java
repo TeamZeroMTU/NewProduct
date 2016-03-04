@@ -2,76 +2,67 @@ package com.example.derrick.studyr;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText usernameField;
-    private EditText passwordField;
-    private AsyncTask<Context, Void, Boolean>  loginTask;
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        usernameField = (EditText)findViewById(R.id.usernameEditText);
-        passwordField = (EditText)findViewById(R.id.passwordEditText);
-        loginTask = null;
-    }
 
-    public void submitLogin(View view)
-    {
-        if(loginTask != null) { // If we're already loging in, short circuit
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
+        if(com.facebook.Profile.getCurrentProfile() != null) {
+            Intent change = new Intent(this, Home.class);
+            startActivity(change);
+            finish();
             return;
         }
-        final String username = usernameField.getText().toString();
-        final String password = passwordField.getText().toString();
-        loginTask = new UserLoginTask( username, password );
-        loginTask.execute(this);
-    }
 
-    public class UserLoginTask extends AsyncTask<Context, Void, Boolean> {
+        setContentView(R.layout.activity_main);
 
-        private final String mUsername;
-        private final String mPassword;
-        private Context mContext;
+        callbackManager = CallbackManager.Factory.create();
 
-        UserLoginTask(String username, String password) {
-            mUsername = username;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Context... params) {
-            mContext = params[0];
-            // TODO: login stuff goes here
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            loginTask = null;
-
-            if (success) {
+        loginButton = (LoginButton)findViewById(R.id.login_button);
+        loginButton.setReadPermissions("public_profile");
+        class StudyrFacebookLogin implements FacebookCallback<LoginResult> {
+            private final Context mContext;
+            StudyrFacebookLogin(Context context) {
+                mContext = context;
+            }
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d("Login", "Success");
                 Intent change = new Intent(mContext, Home.class);
                 startActivity(change);
                 finish();
-            } else {
-                passwordField.setError(getString(R.string.error_incorrect_password));
-                passwordField.requestFocus();
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("Login", "Cancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d("Login", "Error");
             }
         }
-
-        @Override
-        protected void onCancelled() {
-            loginTask = null;
-        }
+        loginButton.registerCallback(callbackManager, new StudyrFacebookLogin(this));
     }
 
     @Override
@@ -94,5 +85,11 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }

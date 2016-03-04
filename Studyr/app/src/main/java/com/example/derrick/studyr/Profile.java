@@ -2,16 +2,13 @@ package com.example.derrick.studyr;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.facebook.login.widget.ProfilePictureView;
 
 public class Profile extends AppCompatActivity {
 
@@ -20,7 +17,13 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        com.facebook.Profile profile = com.facebook.Profile.getCurrentProfile();
 
+        ProfilePictureView profilePictureView = (ProfilePictureView) findViewById(R.id.profilePicture);
+        profilePictureView.setProfileId( profile.getId() );
+
+        TextView nameView = (TextView) findViewById(R.id.nameText);
+        nameView.setText( profile.getName() );
 
         Spinner dropdown = (Spinner) findViewById(R.id.spinnerp);
         if (dropdown != null)

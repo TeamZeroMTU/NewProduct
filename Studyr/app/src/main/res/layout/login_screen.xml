@@ -15,47 +15,20 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:layout_gravity="center_horizontal">
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="Username"
-            android:ems="10"
-            android:id="@+id/usernameEditText"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/passwordEditText"
-            android:layout_below="@+id/usernameEditText"
-            android:layout_alignLeft="@+id/usernameEditText"
-            android:layout_alignStart="@+id/usernameEditText"
-            android:clickable="false"
-            android:editable="false" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Logo/Name"
-            android:id="@+id/textView2"
+            android:text="@string/loginTitleText"
+            android:id="@+id/loginTitle"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="65dp" />
 
-        <Button
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:id="@+id/button"
-            android:layout_below="@+id/passwordEditText"
-            android:layout_alignRight="@+id/passwordEditText"
-            android:layout_alignEnd="@+id/passwordEditText"
-            android:onClick="submitLogin"/>
-
-
-
-    </RelativeLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/loginTitle"
+            android:layout_centerHorizontal="true" />
+</RelativeLayout>

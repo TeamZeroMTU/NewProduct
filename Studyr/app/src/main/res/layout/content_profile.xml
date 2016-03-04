@@ -12,22 +12,21 @@
     tools:context="com.example.derrick.studyr.Profile"
     tools:showIn="@layout/activity_profile">
 
-        <ImageButton
-            android:layout_width="175dp"
-            android:layout_height="175dp"
-            android:id="@+id/imageButton3"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+    <com.facebook.login.widget.ProfilePictureView
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+	android:id="@+id/profilePicture"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Name"
-            android:id="@+id/textView18"
-            android:layout_below="@+id/imageButton3"
-            android:layout_alignLeft="@+id/imageButton3"
-            android:layout_alignStart="@+id/imageButton3"
+            android:id="@+id/nameText"
+            android:layout_below="@+id/profilePicture"
+            android:layout_centerHorizontal="true"
             android:editable="false"
             android:clickable="false" />
 
@@ -38,8 +37,8 @@
             android:text="Details"
             android:id="@+id/textView19"
             android:layout_centerVertical="true"
-            android:layout_alignLeft="@+id/textView18"
-            android:layout_alignStart="@+id/textView18" />
+            android:layout_alignLeft="@+id/nameText"
+            android:layout_alignStart="@+id/nameText" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -30,4 +30,7 @@
     <string name="title_activity_matchmaking">Matchmaking</string>
 
     <string name="error_incorrect_password">This password is incorrect</string>
+
+    <string name="facebook_app_id">576652959159971</string>
+    <string name="loginTitleText">Logo/Name</string>
 </resources>
