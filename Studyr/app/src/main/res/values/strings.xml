@@ -28,4 +28,6 @@
     <string name="title_activity_messaging">Messaging</string>
     <string name="title_activity_send_messeage">SendMesseage</string>
     <string name="title_activity_matchmaking">Matchmaking</string>
+
+    <string name="error_incorrect_password">This password is incorrect</string>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
     <RelativeLayout
-        tools:context="com.example.derrick.studyr.MainActivity"
+        tools:context="com.example.derrick.studyr.LoginActivity"
         tools:showIn="@layout/activity_main"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,7 +21,7 @@
             android:inputType="textPersonName"
             android:text="Username"
             android:ems="10"
-            android:id="@+id/editText3"
+            android:id="@+id/usernameEditText"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 
@@ -30,10 +30,10 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
-            android:id="@+id/editText4"
-            android:layout_below="@+id/editText3"
-            android:layout_alignLeft="@+id/editText3"
-            android:layout_alignStart="@+id/editText3"
+            android:id="@+id/passwordEditText"
+            android:layout_below="@+id/usernameEditText"
+            android:layout_alignLeft="@+id/usernameEditText"
+            android:layout_alignStart="@+id/usernameEditText"
             android:clickable="false"
             android:editable="false" />
 
@@ -51,10 +51,10 @@
             android:layout_height="wrap_content"
             android:text="Login"
             android:id="@+id/button"
-            android:layout_below="@+id/editText4"
-            android:layout_alignRight="@+id/editText4"
-            android:layout_alignEnd="@+id/editText4"
-            android:onClick="changePage"/>
+            android:layout_below="@+id/passwordEditText"
+            android:layout_alignRight="@+id/passwordEditText"
+            android:layout_alignEnd="@+id/passwordEditText"
+            android:onClick="submitLogin"/>
 
 
 
