@@ -26,35 +26,32 @@ public class Profile extends AppCompatActivity {
         nameView.setText( profile.getName() );
 
         Spinner dropdown = (Spinner) findViewById(R.id.spinnerp);
-        if (dropdown != null)
-            dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-                @Override
-                public void onItemSelected(AdapterView parent, View view, int position, long id) {
-
-                    TextView text = (TextView) view;
-                    if (text.getText().equals("Home")) {
-                        toHome();
-                    }
-                    if (text.getText().equals("Messaging")) {
-                        toMessaging();
-                    }
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView parent, View view, int position, long id) {
+                TextView text = (TextView) view;
+                if (text.getText().equals("Home")) {
+                    toHome();
                 }
-
-                @Override
-                public void onNothingSelected(AdapterView parent) {
-
+                if (text.getText().equals("Messaging")) {
+                    toMessaging();
                 }
-            });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView parent) {
+
+            }
+        });
 
     }
 
-   public void toHome()
-   {
-       Intent change = new Intent(this, Home.class);
-       startActivity(change);
-       finish();
-   }
+    public void toHome()
+    {
+        Intent change = new Intent(this, Home.class);
+        startActivity(change);
+        finish();
+    }
 
     public void toMessaging()
     {
@@ -62,9 +59,10 @@ public class Profile extends AppCompatActivity {
         startActivity(change);
         finish();
     }
+
     @Override
     public void onBackPressed() {
-        Intent back = new Intent(this,Home.class);
+        Intent back = new Intent(this, Home.class);
         startActivity(back);
         finish();
     }
