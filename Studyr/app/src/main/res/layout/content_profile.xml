@@ -27,7 +27,6 @@
             android:id="@+id/nameText"
             android:layout_below="@+id/profilePicture"
             android:layout_centerHorizontal="true"
-            android:editable="false"
             android:clickable="false" />
 
         <TextView
