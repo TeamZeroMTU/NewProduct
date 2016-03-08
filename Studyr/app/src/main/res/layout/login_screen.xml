@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
     <RelativeLayout
-        tools:context="com.example.derrick.studyr.LoginActivity"
+        tools:context="com.teamzeromtu.studyr.LoginActivity"
         tools:showIn="@layout/activity_main"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         xmlns:android="http://schemas.android.com/apk/res/android"

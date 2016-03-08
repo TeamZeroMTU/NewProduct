@@ -1,4 +1,4 @@
-package com.example.derrick.studyr;
+package com.teamzeromtu.studyr;
 
 import android.content.Intent;
 import android.os.Bundle;

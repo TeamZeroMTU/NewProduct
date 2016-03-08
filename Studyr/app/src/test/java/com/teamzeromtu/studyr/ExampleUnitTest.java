@@ -1,4 +1,4 @@
-package com.example.derrick.studyr;
+package com.teamzeromtu.studyr;
 
 import org.junit.Test;
 
