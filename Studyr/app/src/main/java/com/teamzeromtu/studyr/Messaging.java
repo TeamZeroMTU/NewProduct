@@ -71,7 +71,6 @@ public class Messaging extends AppCompatActivity {
         Intent message = new Intent(this, SendMesseage.class);
         message.putExtra("name",s);
         startActivity(message);
-        finish();
     }
 
     // Overrides the phones back button to go back to the home page
