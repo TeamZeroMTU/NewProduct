@@ -33,61 +33,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Details"
-            android:id="@+id/textView19"
+            android:text=""
+            android:id="@+id/schoolView"
             android:layout_centerVertical="true"
             android:layout_alignLeft="@+id/nameText"
             android:layout_alignStart="@+id/nameText" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="More Details"
-            android:id="@+id/textView20"
-            android:layout_below="@+id/textView19"
-            android:layout_alignLeft="@+id/textView19"
-            android:layout_alignStart="@+id/textView19" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Few more Details"
-            android:id="@+id/textView21"
-            android:layout_below="@+id/textView20"
-            android:layout_alignLeft="@+id/textView20"
-            android:layout_alignStart="@+id/textView20" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Might still need more"
-            android:id="@+id/textView22"
-            android:layout_below="@+id/textView21"
-            android:layout_alignLeft="@+id/textView21"
-            android:layout_alignStart="@+id/textView21" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Still more"
-            android:id="@+id/textView23"
-            android:layout_below="@+id/textView22"
-            android:layout_alignLeft="@+id/textView22"
-            android:layout_alignStart="@+id/textView22" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="I think that&apos;s enough...?"
-            android:id="@+id/textView24"
-            android:layout_below="@+id/textView23"
-            android:layout_alignLeft="@+id/textView23"
-            android:layout_alignStart="@+id/textView23" />
 
         <Spinner
             android:layout_width="wrap_content"
