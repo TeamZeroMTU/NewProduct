@@ -8,7 +8,11 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.login.widget.ProfilePictureView;
+import com.teamzeromtu.studyr.Data.User;
+import com.teamzeromtu.studyr.Tasks.GetUser;
 
 public class Profile extends AppCompatActivity {
 
@@ -44,6 +48,9 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("Profile_id");
+        loadProfile(id);
     }
 
     public void toHome()
@@ -65,5 +72,27 @@ public class Profile extends AppCompatActivity {
         Intent back = new Intent(this, Home.class);
         startActivity(back);
         finish();
+    }
+
+    private void loadProfile(final String id) {
+        class ProfileSetter implements FacebookCallback<User> {
+            @Override
+            public void onSuccess(User user) {
+                TextView nameView = (TextView) findViewById(R.id.schoolView);
+                nameView.setText(user.getSchool());
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        }
+        GetUser getter = new GetUser(id, new ProfileSetter());
+        getter.execute();
     }
 }

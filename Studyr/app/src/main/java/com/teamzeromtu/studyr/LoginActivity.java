@@ -14,6 +14,8 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.teamzeromtu.studyr.Callbacks.MyIdSetter;
+import com.teamzeromtu.studyr.Tasks.GetMyId;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -29,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
         //for testing purposes to skip past the login screen profile page won't work in this however
        // if(com.facebook.Profile.getCurrentProfile() == null) {
         if(com.facebook.Profile.getCurrentProfile() != null) {
+            GetMyId getter = new GetMyId(new MyIdSetter(((StudyrApplication)getApplication())));
+            getter.execute();
             Intent change = new Intent(this, Home.class);
             startActivity(change);
             finish();
@@ -50,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d("Login", "Success");
+                GetMyId getter = new GetMyId(new MyIdSetter(((StudyrApplication)getApplication())));
+                getter.execute();
                 Intent change = new Intent(mContext, Home.class);
                 startActivity(change);
                 finish();
