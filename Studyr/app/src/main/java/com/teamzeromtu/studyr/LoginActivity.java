@@ -26,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
 
         FacebookSdk.sdkInitialize(getApplicationContext());
 
+        //for testing purposes to skip past the login screen profile page won't work in this however
+       // if(com.facebook.Profile.getCurrentProfile() == null) {
         if(com.facebook.Profile.getCurrentProfile() != null) {
             Intent change = new Intent(this, Home.class);
             startActivity(change);
@@ -34,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
+
 
         callbackManager = CallbackManager.Factory.create();
 

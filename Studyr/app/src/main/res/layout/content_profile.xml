@@ -38,7 +38,6 @@
             android:layout_centerVertical="true"
             android:layout_alignLeft="@+id/nameText"
             android:layout_alignStart="@+id/nameText" />
-
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
