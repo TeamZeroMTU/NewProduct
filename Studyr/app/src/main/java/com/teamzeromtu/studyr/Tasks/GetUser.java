@@ -37,13 +37,13 @@ public class GetUser extends AsyncTask<Void, Void, User> {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);
-            connection.setRequestMethod("GET");
+            connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             connection.setDoInput(true);
             OutputStream os = connection.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
             StringBuilder sb = new StringBuilder();
-            sb.append(URLEncoder.encode("userToken", "UTF-8"));
+            sb.append(URLEncoder.encode("token", "UTF-8"));
             sb.append("=");
             sb.append(URLEncoder.encode(AccessToken.getCurrentAccessToken().getToken(), "UTF-8"));
             writer.write(sb.toString());
@@ -70,7 +70,7 @@ public class GetUser extends AsyncTask<Void, Void, User> {
     @Override
     protected void onPostExecute(User result) {
         if(result == null) {
-            Log.d("GetUser:user", "Null id");
+            Log.d("GetUser:user", "Null user");
             callback.onError(null);
         } else {
             Log.d("GetUser:user", result.getUserID());
