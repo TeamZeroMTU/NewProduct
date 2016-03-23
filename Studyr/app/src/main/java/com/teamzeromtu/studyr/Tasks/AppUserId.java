@@ -39,7 +39,7 @@ public class AppUserId extends AsyncTask<Void, Void, String> {
             OutputStream os = connection.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
             StringBuilder sb = new StringBuilder();
-            sb.append(URLEncoder.encode("userToken", "UTF-8"));
+            sb.append(URLEncoder.encode("token", "UTF-8"));
             sb.append("=");
             Log.d("AppUserId:token", AccessToken.getCurrentAccessToken().getToken());
             sb.append(URLEncoder.encode(AccessToken.getCurrentAccessToken().getToken(), "UTF-8"));
