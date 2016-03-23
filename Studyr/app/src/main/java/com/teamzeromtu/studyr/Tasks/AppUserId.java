@@ -19,10 +19,10 @@ import java.net.URLEncoder;
 /**
  * Created by jbdaley on 3/22/16.
  */
-public class GetMyId extends AsyncTask<Void, Void, String> {
+public class AppUserId extends AsyncTask<Void, Void, String> {
 
     private FacebookCallback<String> callback;
-    public GetMyId(FacebookCallback<String> dataCallback) {
+    public AppUserId(FacebookCallback<String> dataCallback) {
         this.callback = dataCallback;
     }
     @Override
@@ -33,7 +33,7 @@ public class GetMyId extends AsyncTask<Void, Void, String> {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);
-            connection.setRequestMethod("GET");
+            connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             connection.setDoInput(true);
             OutputStream os = connection.getOutputStream();
@@ -41,12 +41,14 @@ public class GetMyId extends AsyncTask<Void, Void, String> {
             StringBuilder sb = new StringBuilder();
             sb.append(URLEncoder.encode("userToken", "UTF-8"));
             sb.append("=");
+            Log.d("AppUserId:token", AccessToken.getCurrentAccessToken().getToken());
             sb.append(URLEncoder.encode(AccessToken.getCurrentAccessToken().getToken(), "UTF-8"));
             writer.write(sb.toString());
             writer.flush();
             writer.close();
             os.close();
             connection.connect();
+            Log.d("AppUserId:code", Integer.toString( connection.getResponseCode() ));
             if(connection.getResponseCode() == 201) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String input;
@@ -54,11 +56,11 @@ public class GetMyId extends AsyncTask<Void, Void, String> {
                     responseBuilder.append(input);
                 }
                 final String jsonString = responseBuilder.toString();
-                Log.d("App:getId", jsonString);
+                Log.d("AppUserId:jsonString", jsonString);
                 return new Gson().fromJson(jsonString, String.class);
             }
         } catch (Exception e) {
-            Log.e("App:getId", Log.getStackTraceString( e ));
+            Log.e("AppUserId:e", Log.getStackTraceString( e ));
         }
         return null;
     }
@@ -66,9 +68,10 @@ public class GetMyId extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         if(result == null) {
-            Log.d("App:id", "Null id");
+            Log.d("AppUserId:id", "Null id");
             callback.onError(null);
         } else {
+            Log.d("AppUserId:id", result);
             callback.onSuccess( result );
         }
     }

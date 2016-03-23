@@ -7,9 +7,9 @@ import com.teamzeromtu.studyr.StudyrApplication;
 /**
  * Created by jbdaley on 3/22/16.
  */
-public class MyIdSetter implements FacebookCallback<String> {
+public class AppUserIdSetter implements FacebookCallback<String> {
     StudyrApplication app;
-    public MyIdSetter(StudyrApplication app) {
+    public AppUserIdSetter(StudyrApplication app) {
         this.app = app;
     }
     @Override

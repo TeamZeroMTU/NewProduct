@@ -32,6 +32,7 @@ public class GetUser extends AsyncTask<Void, Void, User> {
     protected User doInBackground(Void... params) {
         StringBuilder responseBuilder = new StringBuilder();
         try {
+            Log.d("GetUser:id", id);
             URL url = new URL("http://jeremypi.duckdns.org/u/" + id + "/info");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
@@ -57,11 +58,11 @@ public class GetUser extends AsyncTask<Void, Void, User> {
                     responseBuilder.append(input);
                 }
                 final String jsonString = responseBuilder.toString();
-                Log.d("App:getId", jsonString);
+                Log.d("GetUser:jsonString", jsonString);
                 return new Gson().fromJson(jsonString, User.class);
             }
         } catch (Exception e) {
-            Log.e("App:getId", Log.getStackTraceString( e ));
+            Log.e("GetUser:e", Log.getStackTraceString( e ));
         }
         return null;
     }
@@ -69,9 +70,10 @@ public class GetUser extends AsyncTask<Void, Void, User> {
     @Override
     protected void onPostExecute(User result) {
         if(result == null) {
-            Log.d("App:id", "Null id");
+            Log.d("GetUser:user", "Null id");
             callback.onError(null);
         } else {
+            Log.d("GetUser:user", result.getUserID());
             callback.onSuccess( result );
         }
     }
