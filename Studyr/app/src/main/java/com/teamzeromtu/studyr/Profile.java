@@ -5,14 +5,23 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.widget.ProfilePictureView;
+import com.teamzeromtu.studyr.Data.Course;
 import com.teamzeromtu.studyr.Data.User;
 import com.teamzeromtu.studyr.Tasks.GetUser;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import static android.R.*;
+import static android.R.layout.*;
 
 public class Profile extends AppCompatActivity {
 
@@ -21,8 +30,8 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        com.facebook.Profile profile = com.facebook.Profile.getCurrentProfile();
 
+        com.facebook.Profile profile = com.facebook.Profile.getCurrentProfile();
         ProfilePictureView profilePictureView = (ProfilePictureView) findViewById(R.id.profilePicture);
         profilePictureView.setProfileId( profile.getId() );
 
@@ -80,6 +89,10 @@ public class Profile extends AppCompatActivity {
             public void onSuccess(User user) {
                 TextView nameView = (TextView) findViewById(R.id.schoolView);
                 nameView.setText(user.getSchool());
+
+                ArrayList<Course> crs = user.getCourses();
+                ListView crsList = (ListView)findViewById(R.id.courses);
+                crsList.setAdapter(new ArrayAdapter(Profile.this,android.R.layout.simple_list_item_1,courseList(crs)));
             }
 
             @Override
@@ -94,5 +107,13 @@ public class Profile extends AppCompatActivity {
         }
         GetUser getter = new GetUser(id, new ProfileSetter());
         getter.execute();
+    }
+
+    public ArrayList<String> courseList(ArrayList<Course> crs)
+    {
+        ArrayList<String> courses = new ArrayList<String>();
+        for(int i = 0; i<crs.size(); i++)
+            courses.add(crs.get(i).getName());
+        return courses;
     }
 }

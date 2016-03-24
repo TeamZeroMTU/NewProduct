@@ -47,4 +47,39 @@
             android:layout_alignParentStart="true"
             android:spinnerMode="dropdown"
             android:entries="@array/pagesP" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="School"
+        android:id="@+id/school"
+        android:layout_below="@+id/nameText"
+        android:layout_alignLeft="@+id/profilePicture"
+        android:layout_alignStart="@+id/profilePicture" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/courses"
+        android:layout_below="@+id/crsText"
+        android:layout_alignLeft="@+id/crsText"
+        android:layout_alignStart="@+id/crsText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Courses"
+        android:id="@+id/crsText"
+        android:layout_below="@+id/school"
+        android:layout_alignLeft="@+id/school"
+        android:layout_alignStart="@+id/school" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView"
+        android:layout_below="@+id/courses"
+        android:layout_alignLeft="@+id/courses"
+        android:layout_alignStart="@+id/courses" />
 </RelativeLayout>
