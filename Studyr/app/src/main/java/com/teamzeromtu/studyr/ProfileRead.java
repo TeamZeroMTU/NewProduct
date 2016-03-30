@@ -3,6 +3,7 @@ package com.teamzeromtu.studyr;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,19 +18,15 @@ import com.teamzeromtu.studyr.Data.Course;
 import com.teamzeromtu.studyr.Data.User;
 import com.teamzeromtu.studyr.Tasks.GetUser;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import static android.R.*;
-import static android.R.layout.*;
-
-public class Profile extends AppCompatActivity {
-
+public class ProfileRead extends AppCompatActivity {
+    public static final String profileId = "ProfileRead:Id";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-
+        Log.d("ProfileRead", "onCreate");
+        setContentView(R.layout.activity_profile_read);
 
         com.facebook.Profile profile = com.facebook.Profile.getCurrentProfile();
         ProfilePictureView profilePictureView = (ProfilePictureView) findViewById(R.id.profilePicture);
@@ -58,7 +55,7 @@ public class Profile extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        String id = intent.getStringExtra("Profile_id");
+        String id = intent.getStringExtra(profileId);
         loadProfile(id);
     }
 
@@ -87,12 +84,17 @@ public class Profile extends AppCompatActivity {
         class ProfileSetter implements FacebookCallback<User> {
             @Override
             public void onSuccess(User user) {
-                TextView nameView = (TextView) findViewById(R.id.schoolView);
-                nameView.setText(user.getSchool());
+                final String schoolStr = user.getSchool();
+                if(schoolStr != null) {
+                    TextView nameView = (TextView) findViewById(R.id.schoolView);
+                    nameView.setText( schoolStr );
+                }
 
                 ArrayList<Course> crs = user.getCourses();
-                ListView crsList = (ListView)findViewById(R.id.courses);
-                crsList.setAdapter(new ArrayAdapter(Profile.this,android.R.layout.simple_list_item_1,courseList(crs)));
+                if(crs != null) {
+                    ListView crsList = (ListView)findViewById(R.id.courses);
+                    crsList.setAdapter(new ArrayAdapter(ProfileRead.this,android.R.layout.simple_list_item_1,courseList(crs)));
+                }
             }
 
             @Override

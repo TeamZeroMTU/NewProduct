@@ -39,9 +39,9 @@ public class Home extends AppCompatActivity {
     // Methods are used to transition to the different layouts
     public void toProfile()
     {
-        Intent change = new Intent(this, Profile.class);
-        StudyrApplication app = ((StudyrApplication)getApplication());
-        change.putExtra("Profile_id", app.userId);
+        Intent change = new Intent(this, ProfileReadWrite.class);
+        StudyrApplication app = (StudyrApplication)getApplication();
+        change.putExtra(ProfileReadWrite.profileId, app.userId);
         startActivity(change);
         finish();
     }
