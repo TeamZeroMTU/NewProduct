@@ -2,6 +2,7 @@ package com.teamzeromtu.studyr;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.facebook.Profile;
 import com.facebook.login.widget.ProfilePictureView;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
 import com.teamzeromtu.studyr.Data.Course;
@@ -90,9 +92,6 @@ public class ProfileRead extends AppCompatActivity {
                 }
 
                 ArrayList<Course> crs = user.getCourses();
-
-                ListView crsList = (ListView)findViewById(R.id.courses);
-                crsList.setAdapter(new ArrayAdapter(Profile.this, layout.test_list_item,courseList(crs)));
 
                 if(crs != null) {
                     ListView crsList = (ListView)findViewById(R.id.courses);
