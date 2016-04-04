@@ -4,10 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.teamzeromtu.studyr.Data.User;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 public class Messaging extends AppCompatActivity {
 
@@ -38,14 +46,11 @@ public class Messaging extends AppCompatActivity {
 
         // Finds the list view and sets a listener
         ListView matches = (ListView) findViewById(R.id.messages);
-        matches.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView txt = (TextView) view;
-                String name = (String) txt.getText();
-                viewMessage(name);
-            }
-        });
+        ArrayList<String> tst = new ArrayList<>();
+        tst.add("ThisGuy");
+        tst.add("ThisOtherGuy");
+        tst.add("TheLastGuy");
+        matches.setAdapter(new MessagingAdapter(tst));
     }
 
     // Methods move to different layouts
@@ -77,5 +82,61 @@ public class Messaging extends AppCompatActivity {
         startActivity(back);
         finish();
     }
+
+
+    private class MessagingAdapter extends BaseAdapter
+    {
+        ArrayList<String> messages;
+        public MessagingAdapter (ArrayList a)
+        {
+            messages = a;
+        }
+
+        @Override
+        public int getCount() {
+            return messages.size();
+        }
+
+        @Override
+        public String getItem(int position) {
+            return messages.get(position);//.getName();
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            Holder holder = new Holder();
+
+
+            View mesView = getLayoutInflater().inflate(R.layout.messege_display,null);
+            holder.time = (TextView) mesView.findViewById(R.id.time);
+            holder.person = (TextView) mesView.findViewById(R.id.person);
+            holder.mesNum = (TextView) mesView.findViewById(R.id.messageNum);
+            holder.time.setText("11:27");
+            holder.person.setText(messages.get(position));
+            holder.mesNum.setText("  37");
+
+            mesView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    viewMessage(messages.get(position));
+                }
+            });
+
+            return mesView;
+        }
+    }
+
+    private class Holder
+    {
+        TextView person;
+        TextView time;
+        TextView mesNum;
+
+    }
+
 }
 
