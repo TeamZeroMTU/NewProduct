@@ -3,6 +3,7 @@ package com.teamzeromtu.studyr.Tasks;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.facebook.AccessToken;
 import com.google.gson.Gson;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
 import com.teamzeromtu.studyr.Data.User;
@@ -45,6 +46,10 @@ public class UpdateSchool extends AsyncTask<Void, Void, User> {
             sb.append(URLEncoder.encode("school", "UTF-8"));
             sb.append("=");
             sb.append(URLEncoder.encode(user.getSchool(), "UTF-8"));
+            sb.append("&");
+            sb.append(URLEncoder.encode("token", "UTF-8"));
+            sb.append("=");
+            sb.append(URLEncoder.encode(AccessToken.getCurrentAccessToken().getToken(), "UTF-8"));
             writer.write(sb.toString());
             writer.flush();
             writer.close();
