@@ -92,7 +92,7 @@ public class Profile extends AppCompatActivity {
 
                 ArrayList<Course> crs = user.getCourses();
                 ListView crsList = (ListView)findViewById(R.id.courses);
-                crsList.setAdapter(new ArrayAdapter(Profile.this,android.R.layout.simple_list_item_1,courseList(crs)));
+                crsList.setAdapter(new ArrayAdapter(Profile.this, layout.test_list_item,courseList(crs)));
             }
 
             @Override
@@ -116,4 +116,5 @@ public class Profile extends AppCompatActivity {
             courses.add(crs.get(i).getName());
         return courses;
     }
+
 }
