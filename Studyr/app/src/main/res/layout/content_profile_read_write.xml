@@ -9,8 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.teamzeromtu.studyr.Profile"
-    tools:showIn="@layout/activity_profile">
+    tools:context=".ProfileRead"
+    tools:showIn="@layout/activity_profile_read">
 
     <com.facebook.login.widget.ProfilePictureView
         android:layout_width="175dp"
@@ -25,19 +25,19 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Name"
             android:id="@+id/nameText"
-            android:layout_below="@+id/profilePicture"
+            android:layout_below="@id/profilePicture"
             android:layout_centerHorizontal="true"
             android:clickable="false" />
 
-        <TextView
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text=""
             android:id="@+id/schoolView"
             android:layout_centerVertical="true"
-            android:layout_alignLeft="@+id/nameText"
-            android:layout_alignStart="@+id/nameText" />
+            android:layout_alignRight="@id/school"
+            android:layout_alignStart="@id/school" />
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,9 +53,9 @@
         android:layout_height="wrap_content"
         android:text="School"
         android:id="@+id/school"
-        android:layout_below="@+id/nameText"
-        android:layout_alignLeft="@+id/profilePicture"
-        android:layout_alignStart="@+id/profilePicture" />
+        android:layout_below="@id/nameText"
+        android:layout_alignLeft="@id/profilePicture"
+        android:layout_alignStart="@id/profilePicture" />
 
     <ListView
         android:layout_width="wrap_content"
