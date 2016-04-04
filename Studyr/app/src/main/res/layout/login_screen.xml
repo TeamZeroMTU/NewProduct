@@ -31,4 +31,12 @@
             android:layout_gravity="center_horizontal"
             android:layout_below="@+id/loginTitle"
             android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/login_error"
+        android:id="@+id/loginErrorView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="65dp" />
 </RelativeLayout>

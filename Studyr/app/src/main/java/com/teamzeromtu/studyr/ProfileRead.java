@@ -11,9 +11,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.login.widget.ProfilePictureView;
+import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
 import com.teamzeromtu.studyr.Data.Course;
 import com.teamzeromtu.studyr.Data.User;
 import com.teamzeromtu.studyr.Tasks.GetUser;
@@ -81,7 +80,7 @@ public class ProfileRead extends AppCompatActivity {
     }
 
     private void loadProfile(final String id) {
-        class ProfileSetter implements FacebookCallback<User> {
+        class ProfileSetter implements HttpRequestCallback<User> {
             @Override
             public void onSuccess(User user) {
                 final String schoolStr = user.getSchool();
@@ -103,7 +102,7 @@ public class ProfileRead extends AppCompatActivity {
             }
 
             @Override
-            public void onError(FacebookException error) {
+            public void onError(Exception error) {
 
             }
         }

@@ -1,6 +1,6 @@
 package com.teamzeromtu.studyr;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -21,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginButton loginButton;
     private CallbackManager callbackManager;
+    private AccessTokenTracker tokenTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,37 +31,38 @@ public class LoginActivity extends AppCompatActivity {
 
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        //for testing purposes to skip past the login screen profile page won't work in this however
-        //if(com.facebook.Profile.getCurrentProfile() == null) {
+        final Activity thisActivity = this;
+        tokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+                if(currentAccessToken != null) {
+                    AppUserId getter = new AppUserId(new AppUserIdSetter(thisActivity, (StudyrApplication)getApplication()));
+                    getter.execute();
+                }
+            }
+        };
+        tokenTracker.startTracking();
+        callbackManager = CallbackManager.Factory.create();
+
         if(com.facebook.Profile.getCurrentProfile() != null) {
-            AppUserId getter = new AppUserId(new AppUserIdSetter(((StudyrApplication)getApplication())));
+            AppUserId getter = new AppUserId(new AppUserIdSetter(this, (StudyrApplication)getApplication()));
             getter.execute();
-            Intent change = new Intent(this, Home.class);
-            startActivity(change);
-            finish();
-            return;
         }
 
         setContentView(R.layout.activity_main);
 
-
-        callbackManager = CallbackManager.Factory.create();
-
         loginButton = (LoginButton)findViewById(R.id.login_button);
         loginButton.setReadPermissions("public_profile");
         class StudyrFacebookLogin implements FacebookCallback<LoginResult> {
-            private final Context mContext;
-            StudyrFacebookLogin(Context context) {
-                mContext = context;
+            private final Activity mActivity;
+            StudyrFacebookLogin(Activity activity) {
+                mActivity = activity;
             }
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d("Login", "Success");
-                AppUserId getter = new AppUserId(new AppUserIdSetter(((StudyrApplication)getApplication())));
+                AppUserId getter = new AppUserId(new AppUserIdSetter(mActivity, (StudyrApplication)getApplication()));
                 getter.execute();
-                Intent change = new Intent(mContext, Home.class);
-                startActivity(change);
-                finish();
             }
 
             @Override
@@ -100,5 +104,11 @@ public class LoginActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        tokenTracker.stopTracking();
     }
 }

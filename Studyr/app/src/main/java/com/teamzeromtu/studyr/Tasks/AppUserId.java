@@ -4,8 +4,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.facebook.AccessToken;
-import com.facebook.FacebookCallback;
 import com.google.gson.Gson;
+import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
+import com.teamzeromtu.studyr.Exceptions.InvalidUserException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -21,14 +22,15 @@ import java.net.URLEncoder;
  */
 public class AppUserId extends AsyncTask<Void, Void, String> {
 
-    private FacebookCallback<String> callback;
-    public AppUserId(FacebookCallback<String> dataCallback) {
+    private HttpRequestCallback<String> callback;
+    public AppUserId(HttpRequestCallback<String> dataCallback) {
         this.callback = dataCallback;
     }
     @Override
     protected String doInBackground(Void... params) {
         StringBuilder responseBuilder = new StringBuilder();
         try {
+            Log.d("AppUserId", "Starting http request construction");
             URL url = new URL("http://jeremypi.duckdns.org/me/id");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
@@ -48,7 +50,6 @@ public class AppUserId extends AsyncTask<Void, Void, String> {
             writer.close();
             os.close();
             connection.connect();
-            Log.d("AppUserId:code", Integer.toString( connection.getResponseCode() ));
             if(connection.getResponseCode() == 201) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String input;
@@ -59,6 +60,7 @@ public class AppUserId extends AsyncTask<Void, Void, String> {
                 Log.d("AppUserId:jsonString", jsonString);
                 return new Gson().fromJson(jsonString, String.class);
             }
+            Log.d("AppUserId:code", "Bad code!");
         } catch (Exception e) {
             Log.e("AppUserId:e", Log.getStackTraceString( e ));
         }
@@ -69,7 +71,7 @@ public class AppUserId extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String result) {
         if(result == null) {
             Log.d("AppUserId:id", "Null id");
-            callback.onError(null);
+            callback.onError(new InvalidUserException("") );
         } else {
             Log.d("AppUserId:id", result);
             callback.onSuccess( result );
