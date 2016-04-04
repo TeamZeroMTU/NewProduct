@@ -33,4 +33,5 @@
 
     <string name="facebook_app_id">576652959159971</string>
     <string name="loginTitleText">Logo/Name</string>
+    <string name="login_error"></string>
 </resources>

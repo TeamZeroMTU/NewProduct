@@ -6,7 +6,6 @@ import android.util.Log;
 import com.facebook.AccessToken;
 import com.google.gson.Gson;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
-import com.teamzeromtu.studyr.Data.User;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -20,20 +19,17 @@ import java.net.URLEncoder;
 /**
  * Created by jbdaley on 3/22/16.
  */
-public class GetUser extends AsyncTask<Void, Void, User> {
+public class CreateUser extends AsyncTask<Void, Void, String> {
 
-    private String id;
-    private HttpRequestCallback<User> callback;
-    public GetUser( String id, HttpRequestCallback<User> dataCallback) {
-        this.id = id;
+    private HttpRequestCallback<String> callback;
+    public CreateUser(HttpRequestCallback<String> dataCallback) {
         this.callback = dataCallback;
     }
     @Override
-    protected User doInBackground(Void... params) {
+    protected String doInBackground(Void... params) {
         StringBuilder responseBuilder = new StringBuilder();
         try {
-            Log.d("GetUser:id", id);
-            URL url = new URL("http://jeremypi.duckdns.org/u/" + id + "/info");
+            URL url = new URL("http://jeremypi.duckdns.org/u/create");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);
@@ -45,12 +41,14 @@ public class GetUser extends AsyncTask<Void, Void, User> {
             StringBuilder sb = new StringBuilder();
             sb.append(URLEncoder.encode("token", "UTF-8"));
             sb.append("=");
+            Log.d("CreateUser:token", AccessToken.getCurrentAccessToken().getToken());
             sb.append(URLEncoder.encode(AccessToken.getCurrentAccessToken().getToken(), "UTF-8"));
             writer.write(sb.toString());
             writer.flush();
             writer.close();
             os.close();
             connection.connect();
+            Log.d("CreateUser:code", Integer.toString( connection.getResponseCode() ));
             if(connection.getResponseCode() == 201) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String input;
@@ -58,22 +56,22 @@ public class GetUser extends AsyncTask<Void, Void, User> {
                     responseBuilder.append(input);
                 }
                 final String jsonString = responseBuilder.toString();
-                Log.d("GetUser:jsonString", jsonString);
-                return new Gson().fromJson(jsonString, User.class);
+                Log.d("CreateUser:jsonString", jsonString);
+                return new Gson().fromJson(jsonString, String.class);
             }
         } catch (Exception e) {
-            Log.e("GetUser:e", Log.getStackTraceString( e ));
+            Log.e("CreateUser:e", Log.getStackTraceString( e ));
         }
         return null;
     }
 
     @Override
-    protected void onPostExecute(User result) {
+    protected void onPostExecute(String result) {
         if(result == null) {
-            Log.d("GetUser:user", "Null user");
+            Log.d("CreateUser:id", "Null id");
             callback.onError(null);
         } else {
-            Log.d("GetUser:user", result.getUserID());
+            Log.d("CreateUser:id", result);
             callback.onSuccess( result );
         }
     }

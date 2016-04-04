@@ -35,6 +35,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text=""
             android:id="@+id/schoolView"
+            android:inputType="text"
             android:layout_centerVertical="true"
             android:layout_alignRight="@id/school"
             android:layout_alignStart="@id/school" />
