@@ -54,22 +54,19 @@ public class Messaging extends AppCompatActivity {
     }
 
     // Methods move to different layouts
-    public void toHome()
-    {
+    public void toHome() {
         Intent change = new Intent(this, Home.class);
         startActivity(change);
         finish();
     }
 
-    public void toProfile()
-    {
+    public void toProfile()  {
         Intent change = new Intent(this, ProfileReadWrite.class);
         startActivity(change);
         finish();
     }
 
-    public void viewMessage(String s)
-    {
+    public void viewMessage(String s) {
         Intent message = new Intent(this, SendMesseage.class);
         message.putExtra("name",s);
         startActivity(message);
