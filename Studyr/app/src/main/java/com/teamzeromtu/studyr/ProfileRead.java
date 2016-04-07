@@ -2,7 +2,6 @@ package com.teamzeromtu.studyr;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.facebook.Profile;
 import com.facebook.login.widget.ProfilePictureView;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
 import com.teamzeromtu.studyr.Data.Course;
@@ -112,6 +110,7 @@ public class ProfileRead extends AppCompatActivity {
             }
         }
         GetUser getter = new GetUser(id, new ProfileSetter());
+
         getter.execute();
     }
 

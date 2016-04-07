@@ -18,6 +18,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.teamzeromtu.studyr.Callbacks.AppUserIdSetter;
 import com.teamzeromtu.studyr.Tasks.AppUserId;
+import com.teamzeromtu.studyr.Tasks.NetworkTaskManager;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,8 +37,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
                 if(currentAccessToken != null) {
+                    StudyrApplication app = (StudyrApplication)getApplication();
                     AppUserId getter = new AppUserId(new AppUserIdSetter(thisActivity, (StudyrApplication)getApplication()));
-                    getter.execute();
+                    NetworkTaskManager manager = app.taskManager;
+                    manager.execute( getter );
                 }
             }
         };
@@ -45,8 +48,11 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 
         if(com.facebook.Profile.getCurrentProfile() != null) {
-            AppUserId getter = new AppUserId(new AppUserIdSetter(this, (StudyrApplication)getApplication()));
-            getter.execute();
+            StudyrApplication app = (StudyrApplication)getApplication();
+            AppUserId getter = new AppUserId(new AppUserIdSetter(this, app));
+
+            NetworkTaskManager manager = app.taskManager;
+            manager.execute( getter );
         }
 
         setContentView(R.layout.activity_main);
@@ -61,8 +67,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d("Login", "Success");
+                StudyrApplication app = (StudyrApplication)getApplication();
                 AppUserId getter = new AppUserId(new AppUserIdSetter(mActivity, (StudyrApplication)getApplication()));
-                getter.execute();
+                NetworkTaskManager manager = app.taskManager;
+                manager.execute(getter);
             }
 
             @Override

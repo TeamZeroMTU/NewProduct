@@ -23,6 +23,7 @@ import com.teamzeromtu.studyr.Data.User;
 import com.teamzeromtu.studyr.Tasks.AddCourse;
 import com.teamzeromtu.studyr.Tasks.GetCourses;
 import com.teamzeromtu.studyr.Tasks.GetUser;
+import com.teamzeromtu.studyr.Tasks.NetworkTaskManager;
 import com.teamzeromtu.studyr.Tasks.UpdateSchool;
 import com.teamzeromtu.studyr.ViewAdapters.CourseArrayController;
 
@@ -38,7 +39,9 @@ public class ProfileReadWrite extends AppCompatActivity {
             if (schoolStr != null) {
                 schoolField.setText(schoolStr);
                 GetCourses availableCourseGetter = new GetCourses(schoolStr, new AvailableCourseSetter());
-                availableCourseGetter.execute();
+                StudyrApplication app = (StudyrApplication)getApplication();
+                NetworkTaskManager manager = app.taskManager;
+                manager.execute( availableCourseGetter );
             }
 
             ArrayList<Course> crs = user.getCourses();
@@ -142,7 +145,9 @@ public class ProfileReadWrite extends AppCompatActivity {
                     TextView textView = (TextView) v;
                     mUser.setSchool(textView.getText().toString());
                     UpdateSchool task = new UpdateSchool(mUser, new UserSetter());
-                    task.execute();
+                    StudyrApplication app = (StudyrApplication)getApplication();
+                    NetworkTaskManager manager = app.taskManager;
+                    manager.execute( task );
                     resetFocus();
                     hideInput(v);
                     return true;
@@ -226,8 +231,11 @@ public class ProfileReadWrite extends AppCompatActivity {
     }
 
     private void loadProfile(final String id) {
-        GetUser getter = new GetUser(id, new UserSetter());
-        getter.execute();
+        StudyrApplication app = (StudyrApplication)getApplication();
+        final GetUser getter = new GetUser(id, new UserSetter());
+
+        NetworkTaskManager manager = app.taskManager;
+        manager.execute( getter );
     }
 
     public ArrayList<String> courseList(ArrayList<Course> crs) {
