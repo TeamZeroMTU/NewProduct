@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.facebook.AccessToken;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
 import com.teamzeromtu.studyr.Data.Course;
 
@@ -61,7 +62,7 @@ public class GetCourses extends AsyncTask<Void, Void, ArrayList<Course>> {
                 }
                 final String jsonString = responseBuilder.toString();
                 Log.d("GetCourses:jsonString", jsonString);
-                return new Gson().fromJson(jsonString, ArrayList.class);
+                return new Gson().fromJson(jsonString, new TypeToken<ArrayList<Course>>(){}.getType());
             }
         } catch (Exception e) {
             Log.e("GetCourses:e", Log.getStackTraceString( e ));
@@ -72,7 +73,7 @@ public class GetCourses extends AsyncTask<Void, Void, ArrayList<Course>> {
     @Override
     protected void onPostExecute(ArrayList<Course> result) {
         if(result == null) {
-            Log.d("GetCourses:user", "Null user");
+            Log.d("GetCourses:user", "Null courses");
             callback.onError(null);
         } else {
             Log.d("GetCourses:", "size: " + result.size());

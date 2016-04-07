@@ -24,6 +24,7 @@ import com.teamzeromtu.studyr.Tasks.AddCourse;
 import com.teamzeromtu.studyr.Tasks.GetCourses;
 import com.teamzeromtu.studyr.Tasks.GetUser;
 import com.teamzeromtu.studyr.Tasks.NetworkTaskManager;
+import com.teamzeromtu.studyr.Tasks.RemoveCourse;
 import com.teamzeromtu.studyr.Tasks.UpdateSchool;
 import com.teamzeromtu.studyr.ViewAdapters.CourseArrayController;
 
@@ -38,10 +39,10 @@ public class ProfileReadWrite extends AppCompatActivity {
             final String schoolStr = user.getSchool();
             if (schoolStr != null) {
                 schoolField.setText(schoolStr);
-                GetCourses availableCourseGetter = new GetCourses(schoolStr, new AvailableCourseSetter());
+                GetCourses loadAvailableCourses = new GetCourses(schoolStr, new AvailableCourseSetter());
                 StudyrApplication app = (StudyrApplication)getApplication();
                 NetworkTaskManager manager = app.taskManager;
-                manager.execute( availableCourseGetter );
+                manager.execute( loadAvailableCourses );
             }
 
             ArrayList<Course> crs = user.getCourses();
@@ -144,10 +145,10 @@ public class ProfileReadWrite extends AppCompatActivity {
                     Log.i("ProfileReadWrite", "captured");
                     TextView textView = (TextView) v;
                     mUser.setSchool(textView.getText().toString());
-                    UpdateSchool task = new UpdateSchool(mUser, new UserSetter());
+                    UpdateSchool updateSchool = new UpdateSchool(mUser, new UserSetter());
                     StudyrApplication app = (StudyrApplication)getApplication();
                     NetworkTaskManager manager = app.taskManager;
-                    manager.execute( task );
+                    manager.execute( updateSchool );
                     resetFocus();
                     hideInput(v);
                     return true;
@@ -181,10 +182,13 @@ public class ProfileReadWrite extends AppCompatActivity {
                     Course selectedCourse = (Course) availableCourses.getSelectedItem();
                     Log.d("Profile", "Adding course: " + selectedCourse.getName());
                     userCoursesAdapter.add(selectedCourse);
-                    AddCourse task = new AddCourse( new UserSetter(),
+                    AddCourse addCourse = new AddCourse( new UserSetter(),
                                                     (StudyrApplication)getApplication(),
                                                     selectedCourse);
-                    task.execute();
+
+                    StudyrApplication app = (StudyrApplication)getApplication();
+                    NetworkTaskManager manager = app.taskManager;
+                    manager.execute( addCourse );
                 } catch (Exception e) {
                     Log.d("Profile", "Add course: Invalid course selected");
                 }
@@ -199,7 +203,13 @@ public class ProfileReadWrite extends AppCompatActivity {
                 try {
                     Course userSelectedCourse = (Course) userCourses.getItemAtPosition(userCoursesAdapter.getSelection());
                     Log.d("Profile", "Removing course: " + userSelectedCourse.getName());
+                    StudyrApplication app = (StudyrApplication)getApplication();
+                    RemoveCourse removeCourse =
+                            new RemoveCourse( new UserSetter(), app, userSelectedCourse);
                     userCoursesAdapter.remove(userSelectedCourse);
+
+                    NetworkTaskManager manager = app.taskManager;
+                    manager.execute( removeCourse );
                 } catch (Exception e) {
                     Log.d("Profile", "Remove course: Invalid course selection");
                 }
@@ -232,10 +242,10 @@ public class ProfileReadWrite extends AppCompatActivity {
 
     private void loadProfile(final String id) {
         StudyrApplication app = (StudyrApplication)getApplication();
-        final GetUser getter = new GetUser(id, new UserSetter());
+        final GetUser getProfile = new GetUser(id, new UserSetter());
 
         NetworkTaskManager manager = app.taskManager;
-        manager.execute( getter );
+        manager.execute( getProfile );
     }
 
     public ArrayList<String> courseList(ArrayList<Course> crs) {

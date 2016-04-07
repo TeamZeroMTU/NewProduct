@@ -2,6 +2,7 @@ package com.teamzeromtu.studyr.Tasks;
 
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -17,16 +18,21 @@ public class NetworkTaskManager {
         executor = new Thread( new Runnable() {
             @Override
             public void run() {
-                try {
-                    Runnable task = tasks.take();
-                    task.run();
-                } catch(Exception e) {
+                while(true) {
+                    try {
+                        Runnable task = tasks.take();
+                        Log.d("NetworkManager", "running a task...");
+                        task.run();
+                        Log.d("NetworkManager", "finished task");
+                    } catch (Exception e) {
+                    }
                 }
             }
         });
         executor.start();
     }
     public synchronized  <Params, Progress, Result> void execute(@NonNull final AsyncTask<Params, Progress, Result> task, final Params... params) {
+        Log.d("NetworkManager", "adding a task...");
         try {
             tasks.put(new Runnable() {
                 @Override
