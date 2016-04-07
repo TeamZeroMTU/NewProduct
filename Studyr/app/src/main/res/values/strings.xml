@@ -18,9 +18,7 @@
         <item>Profile</item>
     </string-array>
     <string-array name="messages">
-        <item>This Person</item>
-        <item>Another Person</item>
-        <item>A Third Person</item>
+        <item>No Messages</item>
     </string-array>
 
     <string name="title_activity_profile">Profile</string>

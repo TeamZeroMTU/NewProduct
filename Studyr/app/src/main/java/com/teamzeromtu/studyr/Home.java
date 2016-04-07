@@ -49,6 +49,8 @@ public class Home extends AppCompatActivity {
     public void toMessaging()
     {
         Intent change = new Intent(this, Messaging.class);
+        StudyrApplication app = (StudyrApplication)getApplication();
+        change.putExtra(Messaging.MesId, app.userId);
         startActivity(change);
         finish();
     }

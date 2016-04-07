@@ -3,55 +3,84 @@ package com.teamzeromtu.studyr;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
+import com.teamzeromtu.studyr.Data.Course;
 import com.teamzeromtu.studyr.Data.User;
+import com.teamzeromtu.studyr.Tasks.GetMatches;
+import com.teamzeromtu.studyr.Tasks.GetUser;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 public class Messaging extends AppCompatActivity {
+    ArrayList<User> matchList;
 
+    class MatchGetter implements HttpRequestCallback<ArrayList<User>> {
+        @Override
+        public void onSuccess(ArrayList<User> user) {
+            matchList = user;
+            Log.d("Messaging", "Success");
+        }
+            @Override
+            public void onCancel() {
+                Log.d("Messaging", "Cancel");
+            }
+
+            @Override
+            public void onError(Exception error) {
+                Log.d("Messaging", "Error");
+            }
+        }
+    public static final String MesId = "Messaging:Id";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
 
+       // matchList = new ArrayList<User>();
+
         Spinner dropdown = (Spinner) findViewById(R.id.spinner);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView parent, View view, int position, long id) {
+            @Override
+            public void onItemSelected(AdapterView parent, View view, int position, long id) {
 
-                    TextView text = (TextView) view;
-                    if (text.getText().equals("Home")) {
-                        toHome();
-                    }
-                    if (text.getText().equals("Profile")) {
-                        toProfile();
-                    }
+                TextView text = (TextView) view;
+                if (text.getText().equals("Home")) {
+                    toHome();
                 }
-
-                @Override
-                public void onNothingSelected(AdapterView parent) {
-
+                if (text.getText().equals("Profile")) {
+                    toProfile();
                 }
-            });
+            }
 
-        // Finds the list view and sets a listener
+            @Override
+            public void onNothingSelected(AdapterView parent) {
+
+            }
+        });
+
         ListView matches = (ListView) findViewById(R.id.messages);
-        ArrayList<String> tst = new ArrayList<>();
-        tst.add("ThisGuy");
-        tst.add("ThisOtherGuy");
-        tst.add("TheLastGuy");
-        matches.setAdapter(new MessagingAdapter(tst));
+
+        StudyrApplication app = (StudyrApplication)getApplication();
+        GetMatches userMatches = new GetMatches(app.userId,new MatchGetter());
+        userMatches.execute();
+
+        if (matchList!=null)
+            matches.setAdapter(new MessagingAdapter(matchList));
     }
+
 
     // Methods move to different layouts
     public void toHome()
@@ -68,10 +97,11 @@ public class Messaging extends AppCompatActivity {
         finish();
     }
 
-    public void viewMessage(String s)
+    public void viewMessage(String name, String userID)
     {
         Intent message = new Intent(this, SendMesseage.class);
-        message.putExtra("name",s);
+        message.putExtra("name",name);
+        message.putExtra("id",userID);
         startActivity(message);
     }
 
@@ -86,8 +116,8 @@ public class Messaging extends AppCompatActivity {
 
     private class MessagingAdapter extends BaseAdapter
     {
-        ArrayList<String> messages;
-        public MessagingAdapter (ArrayList a)
+        ArrayList<User> messages;
+        public MessagingAdapter (ArrayList<User> a)
         {
             messages = a;
         }
@@ -99,7 +129,7 @@ public class Messaging extends AppCompatActivity {
 
         @Override
         public String getItem(int position) {
-            return messages.get(position);//.getName();
+            return messages.get(position).getName();
         }
 
         @Override
@@ -117,12 +147,12 @@ public class Messaging extends AppCompatActivity {
             holder.person = (TextView) mesView.findViewById(R.id.person);
             holder.mesNum = (TextView) mesView.findViewById(R.id.messageNum);
             holder.time.setText("11:27");
-            holder.person.setText(messages.get(position));
+            holder.person.setText(messages.get(position).getName());
             holder.mesNum.setText("  37");
 
             mesView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    viewMessage(messages.get(position));
+                    viewMessage(messages.get(position).getName(),messages.get(position).getUserID());
                 }
             });
 
@@ -135,8 +165,6 @@ public class Messaging extends AppCompatActivity {
         TextView person;
         TextView time;
         TextView mesNum;
-
     }
-
 }
 
