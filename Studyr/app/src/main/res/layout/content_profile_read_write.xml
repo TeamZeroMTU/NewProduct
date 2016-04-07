@@ -9,72 +9,109 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ProfileRead"
-    tools:showIn="@layout/activity_profile_read">
+    tools:context=".ProfileReadWrite"
+    tools:showIn="@layout/activity_profile_read_write">
 
-    <com.facebook.login.widget.ProfilePictureView
-        android:layout_width="175dp"
-        android:layout_height="175dp"
-	android:id="@+id/profilePicture"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Name"
-            android:id="@+id/nameText"
-            android:layout_below="@id/profilePicture"
-            android:layout_centerHorizontal="true"
-            android:clickable="false" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text=""
-            android:id="@+id/schoolView"
-            android:inputType="text"
-            android:layout_centerVertical="true"
-            android:layout_alignRight="@id/school"
-            android:layout_alignStart="@id/school" />
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/spinnerp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:spinnerMode="dropdown"
             android:entries="@array/pagesP" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="School"
-        android:id="@+id/school"
-        android:layout_below="@id/nameText"
-        android:layout_alignLeft="@id/profilePicture"
-        android:layout_alignStart="@id/profilePicture" />
+        <com.facebook.login.widget.ProfilePictureView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profilePicture"
+            android:layout_gravity="center_horizontal" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/courses"
-        android:layout_below="@+id/crsText"
-        android:layout_toRightOf="@+id/school"
-        android:layout_toEndOf="@+id/school" />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/profileNameView"
+                android:id="@+id/nameText"
+                android:clickable="false"
+            android:layout_gravity="center_horizontal"
+            android:textSize="24sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Courses"
-        android:id="@+id/crsText"
-        android:layout_below="@+id/school"
-        android:layout_alignLeft="@+id/school"
-        android:layout_alignStart="@+id/school" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profileSchooLabel"
+                android:id="@+id/school"
+                android:textSize="16sp" />
+
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text=""
+                    android:textAlignment="viewEnd"
+                    android:id="@+id/schoolView"
+                    android:inputType="text"
+                    android:background="@android:color/transparent"
+                    android:textSize="16sp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profileCoursesLabel"
+                android:id="@+id/crsText"
+                android:textSize="16sp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/courseSpinner"
+                android:textSize="16sp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/crsText"
+                android:layout_toStartOf="@+id/addCourseButton" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:id="@id/addCourseButton"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/removeCourseButton" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:id="@id/removeCourseButton"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/courses"
+            android:choiceMode="singleChoice" />
+
+    </LinearLayout>
 
 
 </RelativeLayout>

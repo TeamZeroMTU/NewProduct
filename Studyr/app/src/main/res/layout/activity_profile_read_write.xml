@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ProfileRead">
+    android:id="@+id/activity_profile_read_write_layout"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    tools:context=".ProfileReadWrite">
 
     <include layout="@layout/content_profile_read_write" />
 

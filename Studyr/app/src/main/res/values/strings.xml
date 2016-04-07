@@ -34,4 +34,7 @@
     <string name="facebook_app_id">576652959159971</string>
     <string name="loginTitleText">Logo/Name</string>
     <string name="login_error"></string>
+    <string name="profileNameView">Name</string>
+    <string name="profileSchooLabel">School</string>
+    <string name="profileCoursesLabel">Courses</string>
 </resources>
