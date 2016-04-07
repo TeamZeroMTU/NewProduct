@@ -6,9 +6,11 @@ import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 
+import com.teamzeromtu.studyr.Callbacks.MessageFormSetter;
+import com.teamzeromtu.studyr.Tasks.GetMessages;
 import com.teamzeromtu.studyr.Tasks.SendNewMessage;
 
-public class SendMesseage extends AppCompatActivity {
+public class MessageForm extends AppCompatActivity {
     EditText editText;
     ListView list;
 
@@ -16,7 +18,7 @@ public class SendMesseage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_messeage);
+        setContentView(R.layout.activity_message_form);
 
         String name = (String)getIntent().getExtras().get("name");
 
@@ -35,6 +37,9 @@ public class SendMesseage extends AppCompatActivity {
                 return handled;
             }
         });
+        StudyrApplication app = (StudyrApplication)getApplication();
+        GetMessages msgStart = new GetMessages(app.userId, new MessageFormSetter(list, app.userId));
+        msgStart.execute();
     }
     public void sendMessage() {
         String newMessage = editText.getText().toString();
@@ -43,9 +48,6 @@ public class SendMesseage extends AppCompatActivity {
         SendNewMessage msgHandler = new SendNewMessage(app.userId, newMessage, list);
 
         msgHandler.execute();
-    }
-    public void getMessage() {
-
     }
 
 

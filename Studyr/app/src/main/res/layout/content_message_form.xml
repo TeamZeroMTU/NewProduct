@@ -9,8 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.teamzeromtu.studyr.SendMesseage"
-    tools:showIn="@layout/activity_send_messeage">
+    tools:context=".MessageForm"
+    tools:showIn="@layout/activity_message_form">
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <requestFocus />
+
 
     </EditText>
 

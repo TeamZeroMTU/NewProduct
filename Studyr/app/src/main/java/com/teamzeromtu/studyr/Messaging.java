@@ -99,7 +99,7 @@ public class Messaging extends AppCompatActivity {
 
     public void viewMessage(String name, String userID)
     {
-        Intent message = new Intent(this, SendMesseage.class);
+        Intent message = new Intent(this, MessageForm.class);
         message.putExtra("name",name);
         message.putExtra("id",userID);
         startActivity(message);

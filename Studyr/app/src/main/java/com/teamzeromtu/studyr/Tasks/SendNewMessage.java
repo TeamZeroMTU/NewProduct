@@ -26,7 +26,6 @@ import java.net.URLEncoder;
 public class SendNewMessage extends AsyncTask<Void, Void, Boolean> {//public class GetUser extends AsyncTask<Void, Void, User> {
 
     private String id;
-    private FacebookCallback<User> callback;
     private String newMessage;
     private ListView listView;
 
@@ -37,7 +36,6 @@ public class SendNewMessage extends AsyncTask<Void, Void, Boolean> {//public cla
     }
     @Override
     protected Boolean doInBackground(Void... params) {
-        StringBuilder responseBuilder = new StringBuilder();
         try {
             String otherGuysID = "10204805470411699";
             Log.d("ExMsgSrvr:id", id);
