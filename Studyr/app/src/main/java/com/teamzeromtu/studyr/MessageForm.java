@@ -38,7 +38,7 @@ public class MessageForm extends AppCompatActivity {
             }
         });
         StudyrApplication app = (StudyrApplication)getApplication();
-        GetMessages msgStart = new GetMessages(app.userId, new MessageFormSetter(list, app.userId));
+        GetMessages msgStart = new GetMessages(app.userId, new MessageFormSetter(this, list, app.userId));
         msgStart.execute();
     }
     public void sendMessage() {
