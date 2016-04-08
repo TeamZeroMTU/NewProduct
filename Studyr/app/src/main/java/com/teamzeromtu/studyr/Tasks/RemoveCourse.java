@@ -22,12 +22,12 @@ import java.net.URLEncoder;
 /**
  * Created by jbdaley on 3/22/16.
  */
-public class AddCourse extends AsyncTask<Void, Void, User> {
+public class RemoveCourse extends AsyncTask<Void, Void, User> {
 
     private HttpRequestCallback<User> callback;
     private StudyrApplication app;
     private Course course;
-    public AddCourse(HttpRequestCallback<User> dataCallback, StudyrApplication app, Course course) {
+    public RemoveCourse(HttpRequestCallback<User> dataCallback, StudyrApplication app, Course course) {
         this.callback = dataCallback;
         this.app = app;
         this.course = course;
@@ -37,7 +37,7 @@ public class AddCourse extends AsyncTask<Void, Void, User> {
         StringBuilder responseBuilder = new StringBuilder();
         try {
             String id = app.userId;
-            URL url = new URL("http://jeremypi.duckdns.org/u/" + id + "/addcourse");
+            URL url = new URL("http://jeremypi.duckdns.org/u/" + id + "/removecourse");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);
@@ -49,7 +49,7 @@ public class AddCourse extends AsyncTask<Void, Void, User> {
             StringBuilder sb = new StringBuilder();
             sb.append(URLEncoder.encode("token", "UTF-8"));
             sb.append("=");
-            Log.d("AddCourse:token", AccessToken.getCurrentAccessToken().getToken());
+            Log.d("RemoveCourse:token", AccessToken.getCurrentAccessToken().getToken());
             sb.append("&");
             sb.append(URLEncoder.encode("name", "UTF-8"));
             sb.append("=");
@@ -59,7 +59,7 @@ public class AddCourse extends AsyncTask<Void, Void, User> {
             writer.close();
             os.close();
             connection.connect();
-            Log.d("AddCourse:code", Integer.toString( connection.getResponseCode() ));
+            Log.d("RemoveCourse:code", Integer.toString( connection.getResponseCode() ));
             int code = connection.getResponseCode();
             if(code >= 200 && code < 300) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -68,11 +68,11 @@ public class AddCourse extends AsyncTask<Void, Void, User> {
                     responseBuilder.append(input);
                 }
                 final String jsonString = responseBuilder.toString();
-                Log.d("AddCourse:jsonString", jsonString);
+                Log.d("RemoveCourse:jsonString", jsonString);
                 return new Gson().fromJson(jsonString, User.class);
             }
         } catch (Exception e) {
-            Log.e("AddCourse:e", Log.getStackTraceString( e ));
+            Log.e("RemoveCourse:e", Log.getStackTraceString( e ));
         }
         return null;
     }
@@ -80,10 +80,10 @@ public class AddCourse extends AsyncTask<Void, Void, User> {
     @Override
     protected void onPostExecute(User result) {
         if(result == null) {
-            Log.d("AddCourse", "Null id");
+            Log.d("RemoveCourse", "Null id");
             callback.onError(null);
         } else {
-            Log.d("AddCourse", "success");
+            Log.d("RemoveCourse", "success");
             callback.onSuccess( result );
         }
     }

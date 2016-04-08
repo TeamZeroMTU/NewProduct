@@ -7,6 +7,7 @@ import com.teamzeromtu.studyr.Exceptions.InvalidUserException;
 import com.teamzeromtu.studyr.R;
 import com.teamzeromtu.studyr.StudyrApplication;
 import com.teamzeromtu.studyr.Tasks.CreateUser;
+import com.teamzeromtu.studyr.Tasks.NetworkTaskManager;
 
 /**
  * Created by jbdaley on 3/22/16.
@@ -40,7 +41,9 @@ public class AppUserIdSetter implements HttpRequestCallback<String> {
         }
         if(error instanceof InvalidUserException && attempts < 3) {
             attempts += 1;
-            new CreateUser(this).execute();
+            CreateUser task = new CreateUser(this);
+            NetworkTaskManager manager = app.taskManager;
+            manager.execute( task );
         }
     }
 }

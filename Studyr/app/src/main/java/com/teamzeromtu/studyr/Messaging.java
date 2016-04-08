@@ -7,20 +7,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
-import com.teamzeromtu.studyr.Data.Course;
 import com.teamzeromtu.studyr.Data.User;
 import com.teamzeromtu.studyr.Tasks.GetMatches;
-import com.teamzeromtu.studyr.Tasks.GetUser;
-
-import org.w3c.dom.Text;
+import com.teamzeromtu.studyr.Tasks.NetworkTaskManager;
 
 import java.util.ArrayList;
 
@@ -75,7 +70,9 @@ public class Messaging extends AppCompatActivity {
 
         StudyrApplication app = (StudyrApplication)getApplication();
         GetMatches userMatches = new GetMatches(app.userId,new MatchGetter());
-        userMatches.execute();
+
+        NetworkTaskManager manager = app.taskManager;
+        manager.execute( userMatches );
 
         if (matchList!=null)
             matches.setAdapter(new MessagingAdapter(matchList));
