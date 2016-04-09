@@ -12,74 +12,71 @@
     tools:context=".ProfileRead"
     tools:showIn="@layout/activity_profile_read">
 
-    <com.facebook.login.widget.ProfilePictureView
-        android:layout_width="175dp"
-        android:layout_height="175dp"
-	android:id="@+id/profilePicture"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerp"
+            android:spinnerMode="dropdown"
+            android:entries="@array/pagesP" />
+
+        <com.facebook.login.widget.ProfilePictureView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profilePicture"
+            android:layout_gravity="center_horizontal" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Name"
+            android:text="@string/profileNameView"
             android:id="@+id/nameText"
-            android:layout_below="@id/profilePicture"
-            android:layout_centerHorizontal="true"
-            android:clickable="false" />
+            android:clickable="false"
+            android:layout_gravity="center_horizontal"
+            android:textSize="24sp" />
 
-        <TextView
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profileSchooLabel"
+                android:id="@+id/school"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text=""
+                android:textAlignment="viewEnd"
+                android:id="@+id/schoolView"
+                android:background="@android:color/transparent"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="@string/profileCoursesLabel"
+             android:id="@+id/crsText"
+             android:textSize="16sp"
+             android:layout_centerVertical="true"
+             android:layout_alignParentStart="true" />
+
+        <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text=""
-            android:id="@+id/schoolView"
-            android:layout_centerVertical="true"
-            android:layout_alignLeft="@id/nameText"
-            android:layout_alignStart="@id/nameText" />
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinnerp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:spinnerMode="dropdown"
-            android:entries="@array/pagesP" />
+            android:id="@+id/courses"
+            android:choiceMode="singleChoice" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="School"
-        android:id="@+id/school"
-        android:layout_below="@id/nameText"
-        android:layout_alignLeft="@id/profilePicture"
-        android:layout_alignStart="@id/profilePicture" />
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/courses"
-        android:layout_below="@+id/crsText"
-        android:layout_alignLeft="@+id/crsText"
-        android:layout_alignStart="@+id/crsText" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Courses"
-        android:id="@+id/crsText"
-        android:layout_below="@id/school"
-        android:layout_alignLeft="@id/school"
-        android:layout_alignStart="@id/school" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView"
-        android:layout_below="@+id/courses"
-        android:layout_alignLeft="@+id/courses"
-        android:layout_alignStart="@+id/courses" />
+    </LinearLayout>
 </RelativeLayout>

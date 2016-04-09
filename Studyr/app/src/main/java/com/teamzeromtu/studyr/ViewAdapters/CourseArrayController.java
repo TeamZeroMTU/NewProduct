@@ -65,10 +65,8 @@ public class CourseArrayController {
     public CourseArrayController(Context context, @NonNull ArrayList<Course> courses, int selection) {
         this.selection = selection;
         class CourseArrayAdapterImpl extends ArrayAdapter<Course> {
-            CourseArrayController adapterInterface;
-            CourseArrayAdapterImpl(Context context, @LayoutRes int resource, @NonNull List<Course> objects, CourseArrayController adapterInterface) {
+            CourseArrayAdapterImpl(Context context, @LayoutRes int resource, @NonNull List<Course> objects) {
                 super(context, resource, objects);
-                this.adapterInterface = adapterInterface;
             }
 
             @Override
@@ -109,11 +107,11 @@ public class CourseArrayController {
                     Log.d("CourseArray", courseName);
                     schoolView.setText(courseName);
                 }
-                schoolView.setBackgroundColor((position == adapterInterface.selection) ? Color.BLUE : Color.TRANSPARENT);
+                schoolView.setBackgroundColor((position == CourseArrayController.this.selection) ? Color.BLUE : Color.TRANSPARENT);
                 // Return the completed view to render on screen
                 return convertView;
             }
         }
-        adapter = new CourseArrayAdapterImpl(context, R.layout.item_course, courses, this);
+        adapter = new CourseArrayAdapterImpl(context, R.layout.item_course, courses);
     }
 }
