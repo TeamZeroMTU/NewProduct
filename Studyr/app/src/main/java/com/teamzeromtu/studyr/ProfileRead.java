@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,23 +15,67 @@ import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
 import com.teamzeromtu.studyr.Data.Course;
 import com.teamzeromtu.studyr.Data.User;
 import com.teamzeromtu.studyr.Tasks.GetUser;
+import com.teamzeromtu.studyr.Tasks.NetworkTaskManager;
+import com.teamzeromtu.studyr.ViewAdapters.CourseArrayController;
 
 import java.util.ArrayList;
 
 public class ProfileRead extends AppCompatActivity {
+    class UserSetter implements HttpRequestCallback<User> {
+        @Override
+        public void onSuccess(User user) {
+            Log.d("ProfileRead", "Success");
+            mUser = user;
+            final String schoolStr = user.getSchool();
+            if (schoolStr != null) {
+                schoolField.setText(schoolStr);
+            }
+
+            TextView nameView = (TextView) findViewById(R.id.nameText);
+            final String name = mUser.getName();
+            if(name != null) {
+                nameView.setText(name);
+            }
+
+            ArrayList<Course> crs = user.getCourses();
+
+            userCoursesAdapter = new CourseArrayController(ProfileRead.this, crs);
+            userCourses.setAdapter(userCoursesAdapter.getAdapter());
+        }
+
+        @Override
+        public void onCancel() {
+            Log.d("ProfileRead", "Cancel");
+        }
+
+        @Override
+        public void onError(Exception error) {
+            Log.d("ProfileRead", "Error");
+        }
+    }
     public static final String profileId = "ProfileRead:Id";
+
+    private User mUser;
+
+    private TextView schoolField;
+    private ListView userCourses;
+
+    private CourseArrayController userCoursesAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("ProfileRead", "onCreate");
         setContentView(R.layout.activity_profile_read);
 
+        mUser = null;
+
+        Intent intent = getIntent();
+        String id = intent.getStringExtra(profileId);
+
         com.facebook.Profile profile = com.facebook.Profile.getCurrentProfile();
         ProfilePictureView profilePictureView = (ProfilePictureView) findViewById(R.id.profilePicture);
-        profilePictureView.setProfileId( profile.getId() );
-
-        TextView nameView = (TextView) findViewById(R.id.nameText);
-        nameView.setText( profile.getName() );
+        profilePictureView.setProfileId( id );
 
         Spinner dropdown = (Spinner) findViewById(R.id.spinnerp);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -53,20 +96,20 @@ public class ProfileRead extends AppCompatActivity {
             }
         });
 
-        Intent intent = getIntent();
-        String id = intent.getStringExtra(profileId);
+        schoolField = (TextView) findViewById(R.id.schoolView);
+
+        userCourses = (ListView)findViewById(R.id.courses);
+
         loadProfile(id);
     }
 
-    public void toHome()
-    {
+    public void toHome() {
         Intent change = new Intent(this, Home.class);
         startActivity(change);
         finish();
     }
 
-    public void toMessaging()
-    {
+    public void toMessaging() {
         Intent change = new Intent(this, Messaging.class);
         startActivity(change);
         finish();
@@ -80,46 +123,17 @@ public class ProfileRead extends AppCompatActivity {
     }
 
     private void loadProfile(final String id) {
-        class ProfileSetter implements HttpRequestCallback<User> {
-            @Override
-            public void onSuccess(User user) {
-                final String schoolStr = user.getSchool();
-                if(schoolStr != null) {
-                    TextView nameView = (TextView) findViewById(R.id.schoolView);
-                    nameView.setText( schoolStr );
-                }
+        StudyrApplication app = (StudyrApplication)getApplication();
+        final GetUser getProfile = new GetUser(id, new UserSetter());
 
-                ArrayList<Course> crs = user.getCourses();
-
-                if(crs != null) {
-                    ListView crsList = (ListView)findViewById(R.id.courses);
-                    crsList.setAdapter(new ArrayAdapter(ProfileRead.this,android.R.layout.simple_list_item_1,courseList(crs)));
-                }
-
-            }
-
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(Exception error) {
-
-            }
-        }
-        GetUser getter = new GetUser(id, new ProfileSetter());
-
-        getter.execute();
+        NetworkTaskManager manager = app.taskManager;
+        manager.execute( getProfile );
     }
 
-    public ArrayList<String> courseList(ArrayList<Course> crs)
-    {
+    public ArrayList<String> courseList(ArrayList<Course> crs) {
         ArrayList<String> courses = new ArrayList<String>();
-        for(int i = 0; i<crs.size(); i++)
+        for (int i = 0; i < crs.size(); i++)
             courses.add(crs.get(i).getName());
         return courses;
     }
-
 }
