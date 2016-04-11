@@ -1,7 +1,6 @@
 package com.teamzeromtu.studyr;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -112,7 +111,7 @@ public class Matchmaking extends AppCompatActivity {
 
     private void loadMatches() {
         StudyrApplication app = (StudyrApplication)getApplication();
-        final AsyncTask getProfile = new GetSimilar(app, new MatchSetter());
+        final GetSimilar getProfile = new GetSimilar(app, new MatchSetter());
 
         NetworkTaskManager manager = app.taskManager;
         manager.execute( getProfile );
