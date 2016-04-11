@@ -17,7 +17,7 @@ import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
 import com.teamzeromtu.studyr.Callbacks.NoOp;
 import com.teamzeromtu.studyr.Data.Course;
 import com.teamzeromtu.studyr.Data.User;
-import com.teamzeromtu.studyr.Tasks.GetMatches;
+import com.teamzeromtu.studyr.Tasks.GetSimilar;
 import com.teamzeromtu.studyr.Tasks.MatchUser;
 import com.teamzeromtu.studyr.Tasks.NetworkTaskManager;
 
@@ -111,7 +111,7 @@ public class Matchmaking extends AppCompatActivity {
 
     private void loadMatches() {
         StudyrApplication app = (StudyrApplication)getApplication();
-        final GetMatches getProfile = new GetMatches(app, new MatchSetter());
+        final AsyncTask getProfile = new GetSimilar(app, new MatchSetter());
 
         NetworkTaskManager manager = app.taskManager;
         manager.execute( getProfile );
