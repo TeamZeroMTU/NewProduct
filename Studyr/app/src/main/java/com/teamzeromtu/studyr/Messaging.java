@@ -74,6 +74,8 @@ public class Messaging extends AppCompatActivity {
         NetworkTaskManager manager = app.taskManager;
         manager.execute( userMatches );
 
+
+
         if (matchList!=null)
             matches.setAdapter(new MessagingAdapter(matchList));
     }
@@ -90,6 +92,8 @@ public class Messaging extends AppCompatActivity {
     public void toProfile()
     {
         Intent change = new Intent(this, ProfileReadWrite.class);
+        StudyrApplication app = (StudyrApplication)getApplication();
+        change.putExtra(ProfileReadWrite.profileId, app.userId);
         startActivity(change);
         finish();
     }
