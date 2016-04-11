@@ -69,7 +69,7 @@ public class Messaging extends AppCompatActivity {
         ListView matches = (ListView) findViewById(R.id.messages);
 
         StudyrApplication app = (StudyrApplication)getApplication();
-        GetMatches userMatches = new GetMatches(app.userId,new MatchGetter());
+        GetMatches userMatches = new GetMatches(app, new MatchGetter());
 
         NetworkTaskManager manager = app.taskManager;
         manager.execute( userMatches );
