@@ -28,10 +28,6 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
         <activity
-            android:name=".ProfileRead"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ProfileReadWrite"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />

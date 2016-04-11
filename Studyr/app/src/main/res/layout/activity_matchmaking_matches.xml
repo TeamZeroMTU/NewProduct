@@ -7,6 +7,6 @@
     android:fitsSystemWindows="true"
     tools:context="com.teamzeromtu.studyr.Matchmaking">
 
-    <include layout="@layout/content_matchmaking" />
+    <include layout="@layout/content_matchmaking_matches" />
 
 </android.support.design.widget.CoordinatorLayout>
