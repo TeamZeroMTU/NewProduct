@@ -137,11 +137,9 @@ public class Messaging extends AppCompatActivity {
                 messages = user;
                 if(messages != null) {
                     mesHolder.mesNum.setText(messages.size()+"");
-                    mesHolder.time.setText("");
                 }
                 else {
                     mesHolder.mesNum.setText("0");
-                    mesHolder.time.setText("");
                 }
 
                 Log.d("GetMessaging", "Success");
@@ -182,7 +180,6 @@ public class Messaging extends AppCompatActivity {
 
 
             View mesView = getLayoutInflater().inflate(R.layout.messege_display,null);
-            holder.time = (TextView) mesView.findViewById(R.id.time);
             holder.person = (TextView) mesView.findViewById(R.id.person);
             holder.mesNum = (TextView) mesView.findViewById(R.id.messageNum);
 
@@ -206,7 +203,6 @@ public class Messaging extends AppCompatActivity {
     private class Holder
     {
         TextView person;
-        TextView time;
         TextView mesNum;
     }
 }

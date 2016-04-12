@@ -8,7 +8,9 @@ import android.widget.ListView;
 import com.facebook.AccessToken;
 import com.facebook.FacebookCallback;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
+import com.teamzeromtu.studyr.Data.Course;
 import com.teamzeromtu.studyr.Data.Message;
 import com.teamzeromtu.studyr.Data.User;
 import com.teamzeromtu.studyr.Exceptions.InvalidUserException;
@@ -47,7 +49,6 @@ public class GetMessages extends AsyncTask<Void, Void, ArrayList<Message>> {//pu
     protected ArrayList<Message> doInBackground(Void... params) {
         StringBuilder responseBuilder = new StringBuilder();
         try {
-            //String otherGuysID = "10204805470411699";
             Log.d("ExMsgSrvr:id", id);
             URL url = new URL("http://jeremypi.duckdns.org/u/" + id + "/getmessages");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -76,7 +77,7 @@ public class GetMessages extends AsyncTask<Void, Void, ArrayList<Message>> {//pu
                 }
                 final String jsonString = responseBuilder.toString();
                 Log.d("AppUserId:jsonString", jsonString);
-                ArrayList<Message> newMessages = new Gson().fromJson(jsonString, ArrayList.class);
+                ArrayList<Message> newMessages = new Gson().fromJson(jsonString, new TypeToken<ArrayList<Message>>(){}.getType());
                 return newMessages;
                 //return true;
             }

@@ -2,6 +2,7 @@ package com.teamzeromtu.studyr;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
@@ -15,6 +16,7 @@ import com.teamzeromtu.studyr.Tasks.SendNewMessage;
 public class MessageForm extends AppCompatActivity {
     EditText editText;
     ListView list;
+    public String matchName;
 
 
     @Override
@@ -22,10 +24,10 @@ public class MessageForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_form);
 
-        String name = (String)getIntent().getExtras().get("name");
+        matchName = (String)getIntent().getExtras().get("name");
 
         TextView nameTitle = (TextView) findViewById(R.id.PersonName);
-        nameTitle.setText(name);
+        nameTitle.setText(matchName);
         editText = (EditText) findViewById(R.id.editText);
         list = (ListView) findViewById(R.id.listView);
         editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -36,12 +38,14 @@ public class MessageForm extends AppCompatActivity {
                     sendMessage();
                     handled = true;
                 }
+                hideInput(v);
                 return handled;
             }
         });
         StudyrApplication app = (StudyrApplication)getApplication();
         GetMessages msgStart = new GetMessages(app.userId, new MessageFormSetter(this, list, app.userId));
         msgStart.execute();
+        resetFocus();
     }
     public void sendMessage() {
         String newMessage = editText.getText().toString();
@@ -61,6 +65,17 @@ public class MessageForm extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         onBackPressed();
+    }
+    private void resetFocus() {
+        findViewById(R.id.activity_message_form_layout).requestFocus();
+    }
+
+    private void hideInput(View view) {
+        hideInput(view.getApplicationWindowToken());
+    }
+    private void hideInput(IBinder binder) {
+        InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(binder, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
 }

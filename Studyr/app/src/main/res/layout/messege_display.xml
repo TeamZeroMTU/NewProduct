@@ -7,16 +7,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/time"
-        android:layout_gravity="right"
-        android:layout_alignBottom="@+id/person"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
         android:id="@+id/person"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_alignParentLeft="true"
@@ -29,6 +19,7 @@
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/messageNum"
+        android:layout_marginLeft="33dp"
         android:layout_alignTop="@+id/person"
         android:layout_toRightOf="@+id/person"
         android:layout_toEndOf="@+id/person"

@@ -32,6 +32,16 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:onClick="back"/>
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/editText"
+        android:layout_below="@+id/back" />
+    <requestFocus />
+
     <EditText
         android:id="@+id/editText"
         android:inputType="textCapSentences"
@@ -45,12 +55,4 @@
 
     </EditText>
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/editText"
-        android:layout_below="@+id/back" />
 </RelativeLayout>
