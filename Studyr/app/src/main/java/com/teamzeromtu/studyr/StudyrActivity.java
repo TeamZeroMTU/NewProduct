@@ -2,6 +2,7 @@ package com.teamzeromtu.studyr;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 public class StudyrActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d("StudyrActivity", "onCreateOptionsMenu");
         getMenuInflater().inflate(R.menu.logged_in_menu, menu);
         return true;
     }

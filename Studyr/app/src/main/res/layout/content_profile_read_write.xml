@@ -17,13 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinnerp"
-            android:spinnerMode="dropdown"
-            android:entries="@array/pagesP" />
-
         <com.facebook.login.widget.ProfilePictureView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

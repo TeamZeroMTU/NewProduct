@@ -1,15 +1,12 @@
 package com.teamzeromtu.studyr;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.facebook.login.widget.ProfilePictureView;
@@ -23,7 +20,7 @@ import com.teamzeromtu.studyr.Tasks.NetworkTaskManager;
 
 import java.util.ArrayList;
 
-public class Matchmaking extends AppCompatActivity {
+public class Matchmaking extends StudyrActivity {
     class MatchSetter implements HttpRequestCallback<ArrayList<User>> {
         @Override
         public void onSuccess(ArrayList<User> matches) {
@@ -63,24 +60,8 @@ public class Matchmaking extends AppCompatActivity {
 
         setContentView(R.layout.activity_matchmaking_matches);
 
-        Spinner dropdown = (Spinner)findViewById(R.id.spinnerp);
-        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView parent, View view, int position, long id) {
-                TextView text = (TextView) view;
-                if (text.getText().equals("Home")) {
-                    toHome();
-                }
-                if (text.getText().equals("Messaging")) {
-                    toMessaging();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView parent) {
-
-            }
-        });
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
 
         schoolField = (TextView)findViewById(R.id.schoolView);
         userCourses = (ListView)findViewById(R.id.courses);
@@ -145,39 +126,7 @@ public class Matchmaking extends AppCompatActivity {
             rejectButton.setVisibility(View.VISIBLE);
         } catch(IndexOutOfBoundsException e) {
             setContentView(R.layout.activity_matchmaking_no_matches);
-
-            Spinner dropdown = (Spinner)findViewById(R.id.spinnerp);
-            dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView parent, View view, int position, long id) {
-                    TextView text = (TextView) view;
-                    if (text.getText().equals("Home")) {
-                        toHome();
-                    }
-                    if (text.getText().equals("Messaging")) {
-                        toMessaging();
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView parent) {
-
-                }
-            });
         }
-    }
-
-    public void toHome() {
-        Log.d("Matchmaking", "toHome()");
-        Intent change = new Intent(this, Home.class);
-        startActivity(change);
-        finish();
-    }
-
-    public void toMessaging() {
-        Intent change = new Intent(this, Messaging.class);
-        startActivity(change);
-        finish();
     }
 
     public ArrayList<String> courseList(ArrayList<Course> crs) {

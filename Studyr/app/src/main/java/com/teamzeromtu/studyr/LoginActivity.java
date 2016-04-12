@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             manager.execute( getter );
         }
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         loginButton = (LoginButton)findViewById(R.id.login_button);
         loginButton.setReadPermissions("public_profile");

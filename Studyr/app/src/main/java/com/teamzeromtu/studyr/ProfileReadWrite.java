@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -30,7 +30,7 @@ import com.teamzeromtu.studyr.ViewAdapters.CourseArrayController;
 
 import java.util.ArrayList;
 
-public class ProfileReadWrite extends AppCompatActivity {
+public class ProfileReadWrite extends StudyrActivity {
     class UserSetter implements HttpRequestCallback<User> {
         @Override
         public void onSuccess(User user) {
@@ -114,24 +114,8 @@ public class ProfileReadWrite extends AppCompatActivity {
         TextView nameView = (TextView) findViewById(R.id.nameText);
         nameView.setText(profile.getName());
 
-        Spinner dropdown = (Spinner) findViewById(R.id.spinnerp);
-        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView parent, View view, int position, long id) {
-                TextView text = (TextView) view;
-                if (text.getText().equals("Home")) {
-                    toHome();
-                }
-                if (text.getText().equals("Messaging")) {
-                    toMessaging();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView parent) {
-
-            }
-        });
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
 
         schoolField = (EditText) findViewById(R.id.schoolView);
         schoolField.setVisibility(View.GONE);
@@ -219,25 +203,6 @@ public class ProfileReadWrite extends AppCompatActivity {
         Intent intent = getIntent();
         String id = intent.getStringExtra(profileId);
         loadProfile(id);
-    }
-
-    public void toHome() {
-        Intent change = new Intent(this, Home.class);
-        startActivity(change);
-        finish();
-    }
-
-    public void toMessaging() {
-        Intent change = new Intent(this, Messaging.class);
-        startActivity(change);
-        finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent back = new Intent(this, Home.class);
-        startActivity(back);
-        finish();
     }
 
     private void loadProfile(final String id) {
