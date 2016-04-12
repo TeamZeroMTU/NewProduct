@@ -40,7 +40,7 @@
             android:label="@string/title_activity_messaging"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SendMesseage"
+            android:name=".MessageForm"
             android:label="@string/title_activity_send_messeage"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
