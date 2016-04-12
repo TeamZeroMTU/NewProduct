@@ -126,6 +126,10 @@ public class Matchmaking extends StudyrActivity {
             rejectButton.setVisibility(View.VISIBLE);
         } catch(IndexOutOfBoundsException e) {
             setContentView(R.layout.activity_matchmaking_no_matches);
+
+            Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(myToolbar);
+
         }
     }
 
