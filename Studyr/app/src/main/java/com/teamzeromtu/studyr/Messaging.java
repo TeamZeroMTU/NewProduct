@@ -26,6 +26,8 @@ public class Messaging extends AppCompatActivity {
         @Override
         public void onSuccess(ArrayList<User> user) {
             matchList = user;
+            ListView matches = (ListView) findViewById(R.id.messages);
+            matches.setAdapter(new MessagingAdapter(matchList));
             Log.d("Messaging", "Success");
         }
             @Override
@@ -38,7 +40,6 @@ public class Messaging extends AppCompatActivity {
                 Log.d("Messaging", "Error");
             }
         }
-    public static final String MesId = "Messaging:Id";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,18 +67,18 @@ public class Messaging extends AppCompatActivity {
             }
         });
 
-        ListView matches = (ListView) findViewById(R.id.messages);
+
 
         StudyrApplication app = (StudyrApplication)getApplication();
         GetMatches userMatches = new GetMatches(app, new MatchGetter());
 
         NetworkTaskManager manager = app.taskManager;
-        manager.execute( userMatches );
+        manager.execute(userMatches);
 
 
 
-        if (matchList!=null)
-            matches.setAdapter(new MessagingAdapter(matchList));
+       // if (matchList!=null)
+         //   matches.setAdapter(new MessagingAdapter(matchList));
     }
 
 
