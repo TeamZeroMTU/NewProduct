@@ -43,7 +43,7 @@ public class MessageForm extends AppCompatActivity {
             }
         });
         StudyrApplication app = (StudyrApplication)getApplication();
-        GetMessages msgStart = new GetMessages(app.userId, new MessageFormSetter(this, list, app.userId));
+        GetMessages msgStart = new GetMessages(app.userId, getIntent().getExtras().get("id").toString(), new MessageFormSetter(this, list, app.userId));
         msgStart.execute();
         resetFocus();
     }
