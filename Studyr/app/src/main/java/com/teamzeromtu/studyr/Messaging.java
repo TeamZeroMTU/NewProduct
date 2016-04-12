@@ -132,6 +132,7 @@ public class Messaging extends StudyrActivity {
 
             View mesView = getLayoutInflater().inflate(R.layout.messege_display,null);
             holder.person = (TextView) mesView.findViewById(R.id.person);
+
             holder.mesNum = (TextView) mesView.findViewById(R.id.messageNum);
 
             holder.person.setText(matches.get(position).getName());
