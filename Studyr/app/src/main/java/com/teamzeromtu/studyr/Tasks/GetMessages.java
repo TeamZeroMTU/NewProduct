@@ -30,17 +30,24 @@ import java.util.ArrayList;
 public class GetMessages extends AsyncTask<Void, Void, ArrayList<Message>> {//public class GetUser extends AsyncTask<Void, Void, User> {
 
     private String id;
+    private String otherId;
     private HttpRequestCallback<ArrayList<Message>> callback;
 
+    public GetMessages(String newID,String otherGuysID, HttpRequestCallback<ArrayList<Message>> dataCallback) {
+        id = newID;
+        otherId = otherGuysID;
+        callback = dataCallback;
+    }
     public GetMessages(String newID, HttpRequestCallback<ArrayList<Message>> dataCallback) {
         id = newID;
+        otherId = "10204805470411699";
         callback = dataCallback;
     }
     @Override
     protected ArrayList<Message> doInBackground(Void... params) {
         StringBuilder responseBuilder = new StringBuilder();
         try {
-            String otherGuysID = "10204805470411699";
+            //String otherGuysID = "10204805470411699";
             Log.d("ExMsgSrvr:id", id);
             URL url = new URL("http://jeremypi.duckdns.org/u/" + id + "/getmessages");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -54,7 +61,7 @@ public class GetMessages extends AsyncTask<Void, Void, ArrayList<Message>> {//pu
             StringBuilder sb = new StringBuilder();
             sb.append(URLEncoder.encode("recid", "UTF-8"));
             sb.append("=");
-            sb.append(URLEncoder.encode(otherGuysID, "UTF-8"));
+            sb.append(URLEncoder.encode(otherId, "UTF-8"));
             writer.write(sb.toString());
             writer.flush();
             writer.close();

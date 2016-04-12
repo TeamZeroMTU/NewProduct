@@ -13,14 +13,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
+import com.teamzeromtu.studyr.Data.Message;
 import com.teamzeromtu.studyr.Data.User;
 import com.teamzeromtu.studyr.Tasks.GetMatches;
+import com.teamzeromtu.studyr.Tasks.GetMessages;
 import com.teamzeromtu.studyr.Tasks.NetworkTaskManager;
 
 import java.util.ArrayList;
 
 public class Messaging extends AppCompatActivity {
     ArrayList<User> matchList;
+    ArrayList<Message> messages;
+    StudyrApplication app;
 
     class MatchGetter implements HttpRequestCallback<ArrayList<User>> {
         @Override
@@ -30,22 +34,41 @@ public class Messaging extends AppCompatActivity {
             matches.setAdapter(new MessagingAdapter(matchList));
             Log.d("Messaging", "Success");
         }
-            @Override
-            public void onCancel() {
-                Log.d("Messaging", "Cancel");
-            }
-
-            @Override
-            public void onError(Exception error) {
-                Log.d("Messaging", "Error");
-            }
+        @Override
+        public void onCancel() {
+            Log.d("Messaging", "Cancel");
         }
+
+        @Override
+        public void onError(Exception error) {
+            Log.d("Messaging", "Error");
+        }
+    }
+
+    class MessageGetter implements HttpRequestCallback<ArrayList<Message>> {
+        @Override
+        public void onSuccess(ArrayList<Message> user) {
+            messages = user;
+
+            Log.d("GetMessaging", "Success");
+        }
+        @Override
+        public void onCancel() {
+            Log.d("GetMessaging", "Cancel");
+        }
+
+        @Override
+        public void onError(Exception error) {
+            Log.d("GetMessaging", "Error");
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
 
-       // matchList = new ArrayList<User>();
+        // matchList = new ArrayList<User>();
 
         Spinner dropdown = (Spinner) findViewById(R.id.spinner);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -69,7 +92,7 @@ public class Messaging extends AppCompatActivity {
 
 
 
-        StudyrApplication app = (StudyrApplication)getApplication();
+        app = (StudyrApplication)getApplication();
         GetMatches userMatches = new GetMatches(app, new MatchGetter());
 
         NetworkTaskManager manager = app.taskManager;
@@ -77,8 +100,8 @@ public class Messaging extends AppCompatActivity {
 
 
 
-       // if (matchList!=null)
-         //   matches.setAdapter(new MessagingAdapter(matchList));
+        // if (matchList!=null)
+        //   matches.setAdapter(new MessagingAdapter(matchList));
     }
 
 
@@ -118,20 +141,20 @@ public class Messaging extends AppCompatActivity {
 
     private class MessagingAdapter extends BaseAdapter
     {
-        ArrayList<User> messages;
+        ArrayList<User> matches;
         public MessagingAdapter (ArrayList<User> a)
         {
-            messages = a;
+            matches = a;
         }
 
         @Override
         public int getCount() {
-            return messages.size();
+            return matches.size();
         }
 
         @Override
         public String getItem(int position) {
-            return messages.get(position).getName();
+            return matches.get(position).getName();
         }
 
         @Override
@@ -148,13 +171,24 @@ public class Messaging extends AppCompatActivity {
             holder.time = (TextView) mesView.findViewById(R.id.time);
             holder.person = (TextView) mesView.findViewById(R.id.person);
             holder.mesNum = (TextView) mesView.findViewById(R.id.messageNum);
-            holder.time.setText("11:27");
-            holder.person.setText(messages.get(position).getName());
-            holder.mesNum.setText("  37");
+
+            holder.person.setText(matches.get(position).getName());
+
+            GetMessages getMes = new GetMessages(app.userId,matches.get(position).getUserID(), new MessageGetter());
+            NetworkTaskManager manager = app.taskManager;
+            manager.execute(getMes);
+            if(messages != null) {
+                holder.mesNum.setText(messages.size());
+                holder.time.setText(messages.get(0).getTime().toString());
+            }
+            else {
+                holder.mesNum.setText("0");
+                holder.time.setText("");
+            }
 
             mesView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    viewMessage(messages.get(position).getName(),messages.get(position).getUserID());
+                    viewMessage(matches.get(position).getName(), matches.get(position).getUserID());
                 }
             });
 

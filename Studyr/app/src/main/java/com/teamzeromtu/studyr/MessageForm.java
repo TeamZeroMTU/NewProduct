@@ -1,9 +1,11 @@
 package com.teamzeromtu.studyr;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 
 import com.teamzeromtu.studyr.Callbacks.MessageFormSetter;
@@ -54,6 +56,10 @@ public class MessageForm extends AppCompatActivity {
     // Method for when the button in the layout is clicked
     public void back(View view)
     {
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         onBackPressed();
     }
 
