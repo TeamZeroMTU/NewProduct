@@ -45,23 +45,7 @@ public class Messaging extends AppCompatActivity {
         }
     }
 
-    class MessageGetter implements HttpRequestCallback<ArrayList<Message>> {
-        @Override
-        public void onSuccess(ArrayList<Message> user) {
-            messages = user;
 
-            Log.d("GetMessaging", "Success");
-        }
-        @Override
-        public void onCancel() {
-            Log.d("GetMessaging", "Cancel");
-        }
-
-        @Override
-        public void onError(Exception error) {
-            Log.d("GetMessaging", "Error");
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +126,36 @@ public class Messaging extends AppCompatActivity {
     private class MessagingAdapter extends BaseAdapter
     {
         ArrayList<User> matches;
+        class MessageGetter implements HttpRequestCallback<ArrayList<Message>> {
+            Holder mesHolder;
+            public MessageGetter(Holder h)
+            {
+                mesHolder = h;
+            }
+            @Override
+            public void onSuccess(ArrayList<Message> user) {
+                messages = user;
+                if(messages != null) {
+                    mesHolder.mesNum.setText(messages.size()+"");
+                    mesHolder.time.setText("");
+                }
+                else {
+                    mesHolder.mesNum.setText("0");
+                    mesHolder.time.setText("");
+                }
+
+                Log.d("GetMessaging", "Success");
+            }
+            @Override
+            public void onCancel() {
+                Log.d("GetMessaging", "Cancel");
+            }
+
+            @Override
+            public void onError(Exception error) {
+                Log.d("GetMessaging", "Error");
+            }
+        }
         public MessagingAdapter (ArrayList<User> a)
         {
             matches = a;
@@ -174,17 +188,10 @@ public class Messaging extends AppCompatActivity {
 
             holder.person.setText(matches.get(position).getName());
 
-            GetMessages getMes = new GetMessages(app.userId,matches.get(position).getUserID(), new MessageGetter());
+            GetMessages getMes = new GetMessages(app.userId,matches.get(position).getUserID(), new MessageGetter(holder));
             NetworkTaskManager manager = app.taskManager;
             manager.execute(getMes);
-            if(messages != null) {
-                holder.mesNum.setText(messages.size());
-                holder.time.setText(messages.get(0).getTime().toString());
-            }
-            else {
-                holder.mesNum.setText("0");
-                holder.time.setText("");
-            }
+
 
             mesView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
