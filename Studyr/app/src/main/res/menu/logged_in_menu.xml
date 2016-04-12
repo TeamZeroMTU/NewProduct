@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/profileEditAction"
+        app:showAsAction="never"
+        android:title="Profile" />
+    <item
+        android:id="@+id/messagingAction"
+        app:showAsAction="never"
+        android:title="Messaging"/>
+    <item
+        android:id="@+id/matchmakingAction"
+        app:showAsAction="never"
+        android:title="Matchmaking"/>
+
+</menu>

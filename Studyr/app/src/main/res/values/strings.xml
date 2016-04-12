@@ -30,7 +30,7 @@
     <string name="error_incorrect_password">This password is incorrect</string>
 
     <string name="facebook_app_id">576652959159971</string>
-    <string name="loginTitleText">Logo/Name</string>
+    <string name="loginTitleText">Studyr</string>
     <string name="login_error"></string>
     <string name="profileNameView">Name</string>
     <string name="profileSchooLabel">School</string>

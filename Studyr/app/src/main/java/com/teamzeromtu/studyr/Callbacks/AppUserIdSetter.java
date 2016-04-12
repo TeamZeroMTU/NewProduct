@@ -1,6 +1,7 @@
 package com.teamzeromtu.studyr.Callbacks;
 
 import android.app.Activity;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.teamzeromtu.studyr.Exceptions.InvalidUserException;
@@ -38,6 +39,7 @@ public class AppUserIdSetter implements HttpRequestCallback<String> {
         TextView errorView = (TextView)activity.findViewById(R.id.loginErrorView);
         if(error != null && error.getMessage() != null) {
             errorView.setText(error.getMessage());
+            Log.d("AppUserIdSetter", error.getMessage());
         }
         if(error instanceof InvalidUserException && attempts < 3) {
             attempts += 1;
