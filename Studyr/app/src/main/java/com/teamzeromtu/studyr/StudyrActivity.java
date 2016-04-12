@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.facebook.login.LoginManager;
+
 /**
  * Created by jbdaley on 4/12/16.
  */
@@ -41,6 +43,14 @@ public class StudyrActivity extends AppCompatActivity {
             case R.id.matchmakingAction:
             {
                 Intent change = new Intent(this, Matchmaking.class);
+                startActivity(change);
+                finish();
+                return true;
+            }
+            case R.id.logoutAction:
+            {
+                LoginManager.getInstance().logOut();
+                Intent change = new Intent(this, LoginActivity.class);
                 startActivity(change);
                 finish();
                 return true;
