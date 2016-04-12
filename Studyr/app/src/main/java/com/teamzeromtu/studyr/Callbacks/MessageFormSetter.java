@@ -28,6 +28,7 @@ public class MessageFormSetter implements HttpRequestCallback<ArrayList<Message>
         ArrayAdapter<Message> messages = new ArrayAdapter<Message>(context, R.layout.messege_display, result);
         //list.setAdapter(messages);
 
+
     }
 
     @Override
