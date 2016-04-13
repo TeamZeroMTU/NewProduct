@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.login.widget.ProfilePictureView;
+import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
 import com.teamzeromtu.studyr.Callbacks.NoOp;
 import com.teamzeromtu.studyr.Data.Course;
@@ -17,6 +18,7 @@ import com.teamzeromtu.studyr.Data.User;
 import com.teamzeromtu.studyr.Tasks.GetSimilar;
 import com.teamzeromtu.studyr.Tasks.MatchUser;
 import com.teamzeromtu.studyr.Tasks.NetworkTaskManager;
+import com.teamzeromtu.studyr.ViewAdapters.MatchmakingAdapter;
 
 import java.util.ArrayList;
 
@@ -62,6 +64,10 @@ public class Matchmaking extends StudyrActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
+
+
+        SwipeFlingAdapterView swipeView = (SwipeFlingAdapterView)findViewById(R.id.matchmakingSwipeView);
+        swipeView.setAdapter(new MatchmakingAdapter());
 
         schoolField = (TextView)findViewById(R.id.schoolView);
         userCourses = (ListView)findViewById(R.id.courses);
