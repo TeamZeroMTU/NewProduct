@@ -49,7 +49,9 @@ class MessageAdapter extends ArrayAdapter<Message> {
             senderName = "you";
         }
         else {
-            senderName = ((MessageForm)context).matchName;
+            String temp = ((MessageForm)context).matchName;
+            String arr[] = temp.split(" ", 2);
+            senderName = arr[0];
         }
         //time.setText(message.getTime().toString());
         person.setText(senderName);
