@@ -51,7 +51,7 @@ public class MessageForm extends AppCompatActivity {
         String newMessage = editText.getText().toString();
         editText.setText("");
         StudyrApplication app = (StudyrApplication)getApplication();
-        SendNewMessage msgHandler = new SendNewMessage(app.userId, newMessage, list);
+        SendNewMessage msgHandler = new SendNewMessage(app.userId, newMessage, list, getIntent().getExtras().get("id").toString());
 
         msgHandler.execute();
     }

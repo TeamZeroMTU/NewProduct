@@ -28,16 +28,18 @@ public class SendNewMessage extends AsyncTask<Void, Void, Boolean> {//public cla
     private String id;
     private String newMessage;
     private ListView listView;
+    private String theirID;
 
-    public SendNewMessage(String newID, String msg, ListView list) {
+    public SendNewMessage(String newID, String msg, ListView list, String otherGuysId) {
         newMessage = msg;
         listView = list;
         id = newID;
+        this.theirID = otherGuysId;
     }
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
-            String otherGuysID = "10204805470411699";
+            String otherGuysID = theirID;
             Log.d("ExMsgSrvr:id", id);
             URL url = new URL("http://jeremypi.duckdns.org/u/" + id + "/sendmessage");///u/:id/getmessages
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
