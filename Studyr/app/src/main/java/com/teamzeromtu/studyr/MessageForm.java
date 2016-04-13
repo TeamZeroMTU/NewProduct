@@ -45,7 +45,7 @@ public class MessageForm extends AppCompatActivity {
         });
         StudyrApplication app = (StudyrApplication)getApplication();
         GetMessages msgStart = new GetMessages(app.userId, getIntent().getExtras().get("id").toString(), new MessageFormSetter(this, list, app.userId));
-        msgStart.execute();
+        app.taskManager.execute(msgStart);
         resetFocus();
     }
     public void sendMessage() {
@@ -53,8 +53,10 @@ public class MessageForm extends AppCompatActivity {
         editText.setText("");
         StudyrApplication app = (StudyrApplication)getApplication();
         SendNewMessage msgHandler = new SendNewMessage(app.userId, newMessage, list, getIntent().getExtras().get("id").toString());
-
-        msgHandler.execute();
+        app.taskManager.execute(msgHandler);
+        GetMessages msgStart = new GetMessages(app.userId, getIntent().getExtras().get("id").toString(), new MessageFormSetter(this, list, app.userId));
+        app.taskManager.execute(msgStart);
+        resetFocus();
     }
 
 

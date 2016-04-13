@@ -46,6 +46,11 @@ public class Messaging extends StudyrActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setContentView(R.layout.activity_messaging);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -64,6 +69,8 @@ public class Messaging extends StudyrActivity {
         // if (matchList!=null)
         //   matches.setAdapter(new MessagingAdapter(matchList));
     }
+
+
 
 
     public void viewMessage(String name, String userID)
