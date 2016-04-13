@@ -4,10 +4,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
-import android.view.*;
+import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.*;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.teamzeromtu.studyr.Callbacks.MessageFormSetter;
 import com.teamzeromtu.studyr.Tasks.GetMessages;
@@ -26,8 +29,10 @@ public class MessageForm extends AppCompatActivity {
 
         matchName = (String)getIntent().getExtras().get("name");
 
-        TextView nameTitle = (TextView) findViewById(R.id.PersonName);
-        nameTitle.setText(matchName);
+        android.support.v7.widget.Toolbar myToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        myToolbar.setTitle( matchName );
+        setSupportActionBar(myToolbar);
+
         editText = (EditText) findViewById(R.id.editText);
         list = (ListView) findViewById(R.id.listView);
         editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -59,16 +64,6 @@ public class MessageForm extends AppCompatActivity {
         resetFocus();
     }
 
-
-    // Method for when the button in the layout is clicked
-    public void back(View view)
-    {
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-        onBackPressed();
-    }
     private void resetFocus() {
         findViewById(R.id.activity_message_form_layout).requestFocus();
     }
