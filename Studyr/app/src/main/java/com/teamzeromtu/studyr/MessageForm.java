@@ -3,7 +3,6 @@ package com.teamzeromtu.studyr;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,7 +16,7 @@ import com.teamzeromtu.studyr.Callbacks.MessageFormSetter;
 import com.teamzeromtu.studyr.Tasks.GetMessages;
 import com.teamzeromtu.studyr.Tasks.SendNewMessage;
 
-public class MessageForm extends AppCompatActivity {
+public class MessageForm extends StudyrActivity {
     EditText editText;
     ListView list;
     public String matchName;
