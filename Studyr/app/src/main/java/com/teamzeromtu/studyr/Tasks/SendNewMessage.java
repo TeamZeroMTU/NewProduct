@@ -112,6 +112,7 @@ public class SendNewMessage extends AsyncTask<Void, Void, Boolean> {//public cla
 
     @Override
     protected void onPostExecute(Boolean result) {
+
         if(result) {
             return;
         }

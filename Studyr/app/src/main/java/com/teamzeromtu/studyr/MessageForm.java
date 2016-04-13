@@ -39,6 +39,7 @@ public class MessageForm extends AppCompatActivity {
                     handled = true;
                 }
                 hideInput(v);
+                resetFocus();
                 return handled;
             }
         });
