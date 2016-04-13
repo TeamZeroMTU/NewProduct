@@ -14,6 +14,10 @@
         app:showAsAction="never"
         android:title="Matchmaking"/>
     <item
+        android:id="@+id/aboutAction"
+        app:showAsAction="ifRoom"
+        android:title="About"/>
+    <item
         android:id="@+id/logoutAction"
         app:showAsAction="never"
         android:title="Log out"/>

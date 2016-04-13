@@ -47,6 +47,13 @@ public class StudyrActivity extends AppCompatActivity {
                 finish();
                 return true;
             }
+            case R.id.aboutAction:
+            {
+                Intent change = new Intent(this, About.class);
+                startActivity( change );
+                finish();
+                return true;
+            }
             case R.id.logoutAction:
             {
                 LoginManager.getInstance().logOut();

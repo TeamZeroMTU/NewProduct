@@ -24,8 +24,9 @@
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_home">Home</string>
     <string name="title_activity_messaging">Messaging</string>
-    <string name="title_activity_send_messeage">SendMesseage</string>
+    <string name="title_activity_send_messeage"></string>
     <string name="title_activity_matchmaking">Matchmaking</string>
+    <string name="title_activity_about">About</string>
 
     <string name="error_incorrect_password">This password is incorrect</string>
 

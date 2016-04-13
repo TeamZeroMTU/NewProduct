@@ -32,6 +32,10 @@
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".About"
+            android:label="@string/title_activity_about"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Messaging"
             android:label="@string/title_activity_messaging"
             android:theme="@style/AppTheme.NoActionBar" />

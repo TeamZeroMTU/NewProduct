@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -29,7 +30,7 @@ public class MessageForm extends AppCompatActivity {
 
         matchName = (String)getIntent().getExtras().get("name");
 
-        android.support.v7.widget.Toolbar myToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         myToolbar.setTitle( matchName );
         setSupportActionBar(myToolbar);
 
