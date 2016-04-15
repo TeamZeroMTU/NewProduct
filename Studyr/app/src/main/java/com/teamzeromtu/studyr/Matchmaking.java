@@ -3,21 +3,15 @@ package com.teamzeromtu.studyr;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.facebook.login.widget.ProfilePictureView;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
 import com.teamzeromtu.studyr.Callbacks.NoOp;
-import com.teamzeromtu.studyr.Data.Course;
 import com.teamzeromtu.studyr.Data.User;
 import com.teamzeromtu.studyr.Tasks.GetSimilar;
 import com.teamzeromtu.studyr.Tasks.MatchUser;
 import com.teamzeromtu.studyr.Tasks.NetworkTaskManager;
+import com.teamzeromtu.studyr.Tasks.RejectUser;
 import com.teamzeromtu.studyr.ViewAdapters.MatchmakingAdapter;
 
 import java.util.ArrayList;
@@ -28,8 +22,7 @@ public class Matchmaking extends StudyrActivity {
         public void onSuccess(ArrayList<User> matches) {
             Log.d("ProfileReadWrite", "Success");
 
-            matchedUsers = matches;
-            updateUserIdx( 0 );
+            matchAdapter.addMatches( matches );
         }
 
         @Override
@@ -42,107 +35,69 @@ public class Matchmaking extends StudyrActivity {
             Log.d("ProfileReadWrite", "Error");
         }
     }
-    public static final String profileUser = "ProfileRead:Id";
-
-    private ArrayList<User> matchedUsers;
-    private int userIdx;
-
-    private TextView schoolField;
-    private ListView userCourses;
-
-    private Button acceptButton;
-    private Button rejectButton;
-
-    private ArrayAdapter<String> userCoursesAdapter;
+    private MatchmakingAdapter matchAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("ProfileRead", "onCreate");
+        Log.d("Fling", "onCreate()");
 
         setContentView(R.layout.activity_matchmaking_matches);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
-
         SwipeFlingAdapterView swipeView = (SwipeFlingAdapterView)findViewById(R.id.matchmakingSwipeView);
-        swipeView.setAdapter(new MatchmakingAdapter());
-
-        schoolField = (TextView)findViewById(R.id.schoolView);
-        userCourses = (ListView)findViewById(R.id.courses);
-
-        userCoursesAdapter = new ArrayAdapter<String>(this, R.layout.item_course, R.id.schoolName);
-        userCourses.setAdapter(userCoursesAdapter);
-
-        acceptButton = (Button)findViewById(R.id.acceptMatch);
-        acceptButton.setOnClickListener(new View.OnClickListener() {
+        swipeView.setFlingListener( new SwipeFlingAdapterView.onFlingListener() {
             @Override
-            public void onClick(View v) {
-                MatchUser task = new MatchUser((StudyrApplication)getApplication(), matchedUsers.get(userIdx).getUserID(), new NoOp<User>());
-                Matchmaking.this.updateUserIdx( Matchmaking.this.userIdx + 1 );
+            public void removeFirstObjectInAdapter() {
+                Log.d("Fling", "removeFirstObjectInAdapter()");
+                matchAdapter.pop();
+            }
+
+            @Override
+            public void onLeftCardExit(Object o) {
+                final User user = (User)o;
+                StudyrApplication app = (StudyrApplication)getApplication();
+                RejectUser task = new RejectUser(app, user.getUserID(), new NoOp<User>());
+                app.taskManager.execute( task );
+            }
+
+            @Override
+            public void onRightCardExit(Object o) {
+                Log.d("Fling", "onRightCardExit()");
+                final User user = (User)o;
+                StudyrApplication app = (StudyrApplication)getApplication();
+                MatchUser task = new MatchUser(app, user.getUserID(), new NoOp<User>());
+                app.taskManager.execute( task );
+            }
+
+            @Override
+            public void onAdapterAboutToEmpty(int i) {
+                Log.d("Fling", "onAdapterAboutToEmpty()");
+                // This function gets called too frequently.
+                loadMatches();
+            }
+
+            @Override
+            public void onScroll(float v) {
             }
         });
-        acceptButton.setVisibility(View.GONE);
-        rejectButton = (Button)findViewById(R.id.rejectMatch);
-        rejectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Matchmaking.this.updateUserIdx( Matchmaking.this.userIdx + 1 );
-            }
-        });
-        rejectButton.setVisibility(View.GONE);
 
-        loadMatches();
+
+        matchAdapter = new MatchmakingAdapter(this);
+        swipeView.setAdapter( matchAdapter );
+
+        //loadMatches();
     }
 
     private void loadMatches() {
+        Log.d("Fling", "loadMatches()");
         StudyrApplication app = (StudyrApplication)getApplication();
         final GetSimilar getProfile = new GetSimilar(app, new MatchSetter());
 
         NetworkTaskManager manager = app.taskManager;
         manager.execute( getProfile );
-    }
-
-    private void updateUserIdx(int newVal) {
-        acceptButton.setVisibility(View.GONE);
-        rejectButton.setVisibility(View.GONE);
-        userIdx = newVal;
-
-        try {
-            final User profile = matchedUsers.get(userIdx);
-            final String schoolStr = profile.getSchool();
-            if (schoolStr != null) {
-                schoolField.setText(schoolStr);
-            } else {
-                schoolField.setText("");
-            }
-
-            final ArrayList<Course> profileCourses = profile.getCourses();
-            userCoursesAdapter.clear();
-            userCoursesAdapter.addAll(courseList(profileCourses));
-
-            ProfilePictureView profilePictureView = (ProfilePictureView) findViewById(R.id.profilePicture);
-            profilePictureView.setProfileId(profile.getUserID());
-
-            TextView nameView = (TextView) findViewById(R.id.nameText);
-            nameView.setText(profile.getName());
-
-            acceptButton.setVisibility(View.VISIBLE);
-            rejectButton.setVisibility(View.VISIBLE);
-        } catch(IndexOutOfBoundsException e) {
-            setContentView(R.layout.activity_matchmaking_no_matches);
-
-            Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(myToolbar);
-
-        }
-    }
-
-    public ArrayList<String> courseList(ArrayList<Course> crs) {
-        ArrayList<String> courses = new ArrayList<String>();
-        for (int i = 0; i < crs.size(); i++)
-            courses.add(crs.get(i).getName());
-        return courses;
     }
 }
