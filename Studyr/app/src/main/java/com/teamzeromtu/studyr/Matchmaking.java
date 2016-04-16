@@ -33,8 +33,18 @@ public class Matchmaking extends StudyrActivity {
         @Override
         public void onError(Exception error) {
             Log.d("ProfileReadWrite", "Error");
+
+            Matchmaking.this.setViewNoMatches();
         }
     }
+
+    private void setViewNoMatches() {
+        setContentView(R.layout.activity_matchmaking_no_matches);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+    }
+
     private MatchmakingAdapter matchAdapter;
 
     @Override
