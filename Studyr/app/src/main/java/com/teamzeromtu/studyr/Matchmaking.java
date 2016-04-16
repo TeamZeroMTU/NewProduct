@@ -23,29 +23,34 @@ public class Matchmaking extends StudyrActivity {
             Log.d("ProfileReadWrite", "Success");
 
             matchAdapter.addMatches( matches );
+            loadingMatches = false;
         }
 
         @Override
         public void onCancel() {
             Log.d("ProfileReadWrite", "Cancel");
+            loadingMatches = false;
         }
 
         @Override
         public void onError(Exception error) {
             Log.d("ProfileReadWrite", "Error");
 
-            Matchmaking.this.setViewNoMatches();
+            Matchmaking.this.setLayoutNoMatches();
+            // loadingMatches = false; blocking loading will save another server call
         }
     }
 
-    private void setViewNoMatches() {
+    private void setLayoutNoMatches() {
         setContentView(R.layout.activity_matchmaking_no_matches);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
     }
 
+    private SwipeFlingAdapterView swipeView;
     private MatchmakingAdapter matchAdapter;
+    private boolean loadingMatches = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +63,7 @@ public class Matchmaking extends StudyrActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
-        SwipeFlingAdapterView swipeView = (SwipeFlingAdapterView)findViewById(R.id.matchmakingSwipeView);
+        swipeView = (SwipeFlingAdapterView)findViewById(R.id.matchmakingSwipeView);
         swipeView.setFlingListener( new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
@@ -102,12 +107,15 @@ public class Matchmaking extends StudyrActivity {
         //loadMatches();
     }
 
-    private void loadMatches() {
-        Log.d("Fling", "loadMatches()");
-        StudyrApplication app = (StudyrApplication)getApplication();
-        final GetSimilar getProfile = new GetSimilar(app, new MatchSetter());
+    private synchronized void loadMatches() {
+        if(!loadingMatches) {
+            loadingMatches = true;
+            Log.d("Fling", "loadMatches()");
+            StudyrApplication app = (StudyrApplication) getApplication();
+            final GetSimilar getProfile = new GetSimilar(app, new MatchSetter());
 
-        NetworkTaskManager manager = app.taskManager;
-        manager.execute( getProfile );
+            NetworkTaskManager manager = app.taskManager;
+            manager.execute(getProfile);
+        }
     }
 }
