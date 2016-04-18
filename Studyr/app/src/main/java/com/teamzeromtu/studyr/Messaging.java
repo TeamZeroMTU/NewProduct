@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -112,6 +113,10 @@ public class Messaging extends StudyrActivity {
 
     private class MessagingAdapter extends BaseAdapter
     {
+        private LayoutInflater inflater;
+        public MessagingAdapter() {
+            inflater = getLayoutInflater();
+        }
         @Override
         public int getCount() {
             return Messaging.this.matchList.size();
@@ -133,7 +138,7 @@ public class Messaging extends StudyrActivity {
 
             View mesView = convertView;
             if(mesView == null) {
-                mesView = getLayoutInflater().inflate(R.layout.messege_overview_display, null);
+                mesView = inflater.inflate(R.layout.messege_overview_display, null);
             }
 
             final User user = getItem(position);
@@ -161,12 +166,6 @@ public class Messaging extends StudyrActivity {
 
             return mesView;
         }
-    }
-
-    private class Holder
-    {
-        TextView person;
-        TextView mesNum;
     }
 }
 
