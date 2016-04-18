@@ -19,18 +19,46 @@ import com.teamzeromtu.studyr.Tasks.GetMessages;
 import com.teamzeromtu.studyr.Tasks.NetworkTaskManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Messaging extends StudyrActivity {
     ArrayList<User> matchList;
-    ArrayList<Message> messages;
+    Map<User, ArrayList<Message>> messageMap = new HashMap<>();
     StudyrApplication app;
 
     class MatchGetter implements HttpRequestCallback<ArrayList<User>> {
         @Override
-        public void onSuccess(ArrayList<User> user) {
-            matchList = user;
+        public void onSuccess(ArrayList<User> matchList) {
+            Messaging.this.matchList = matchList;
+
+            final MessagingAdapter adapter = new MessagingAdapter();
+
             ListView matches = (ListView) findViewById(R.id.messages);
-            matches.setAdapter(new MessagingAdapter(matchList));
+            matches.setAdapter( adapter );
+
+            for(final User user: Messaging.this.matchList) {
+                GetMessages getMes = new GetMessages(app.userId, user.getUserID(), new HttpRequestCallback<ArrayList<Message>>() {
+                    @Override
+                    public void onSuccess(ArrayList<Message> messages) {
+                        Messaging.this.messageMap.put(user, messages);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+                NetworkTaskManager manager = app.taskManager;
+                manager.execute(getMes);
+            }
+
             Log.d("Messaging", "Success");
         }
         @Override
@@ -84,48 +112,14 @@ public class Messaging extends StudyrActivity {
 
     private class MessagingAdapter extends BaseAdapter
     {
-        ArrayList<User> matches;
-        class MessageGetter implements HttpRequestCallback<ArrayList<Message>> {
-            Holder mesHolder;
-            public MessageGetter(Holder h)
-            {
-                mesHolder = h;
-            }
-            @Override
-            public void onSuccess(ArrayList<Message> user) {
-                messages = user;
-                if(messages != null) {
-                    mesHolder.mesNum.setText(Integer.toString( messages.size() ));
-                }
-                else {
-                    mesHolder.mesNum.setText("0");
-                }
-
-                Log.d("GetMessaging", "Success");
-            }
-            @Override
-            public void onCancel() {
-                Log.d("GetMessaging", "Cancel");
-            }
-
-            @Override
-            public void onError(Exception error) {
-                Log.d("GetMessaging", "Error");
-            }
-        }
-        public MessagingAdapter (ArrayList<User> a)
-        {
-            matches = a;
-        }
-
         @Override
         public int getCount() {
-            return matches.size();
+            return Messaging.this.matchList.size();
         }
 
         @Override
-        public String getItem(int position) {
-            return matches.get(position).getName();
+        public User getItem(int position) {
+            return Messaging.this.matchList.get(position);
         }
 
         @Override
@@ -136,32 +130,34 @@ public class Messaging extends StudyrActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             Log.d("Messaging", "getView(" + position + ")");
-            Holder holder = new Holder();
 
             View mesView = convertView;
-            if(convertView == null) {
+            if(mesView == null) {
                 mesView = getLayoutInflater().inflate(R.layout.messege_overview_display, null);
             }
 
-            ProfilePictureView picture = (ProfilePictureView)mesView.findViewById(R.id.profilePicture);
-            picture.setProfileId( matches.get(position).getUserID() );
+            final User user = getItem(position);
 
-            holder.person = (TextView) mesView.findViewById(R.id.person);
+            ProfilePictureView picture = (ProfilePictureView) mesView.findViewById(R.id.profilePicture);
+            picture.setProfileId(user.getUserID());
 
-            holder.mesNum = (TextView) mesView.findViewById(R.id.messageNum);
-
-            holder.person.setText(matches.get(position).getName());
-
-            GetMessages getMes = new GetMessages(app.userId,matches.get(position).getUserID(), new MessageGetter(holder));
-            NetworkTaskManager manager = app.taskManager;
-            manager.execute(getMes);
+            ArrayList<Message> messages = Messaging.this.messageMap.get( user );
+            if(messages != null) {
+                int nMessages = messages.size();
 
 
-            mesView.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    viewMessage(matches.get(position).getName(), matches.get(position).getUserID());
-                }
-            });
+                TextView person = (TextView) mesView.findViewById(R.id.person);
+                TextView mesNum = (TextView) mesView.findViewById(R.id.messageNum);
+
+                person.setText(user.getName());
+                mesNum.setText(Integer.toString( nMessages ));
+
+                mesView.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        viewMessage(user.getName(), user.getUserID());
+                    }
+                });
+            }
 
             return mesView;
         }
