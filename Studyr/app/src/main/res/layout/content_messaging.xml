@@ -10,18 +10,12 @@
     tools:context="com.teamzeromtu.studyr.Messaging"
     tools:showIn="@layout/activity_messaging">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Messaging Manager"
-        android:id="@+id/textView12"
-        android:layout_gravity="center_horizontal" />
-
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/messages"
+        android:dividerHeight="0dp"
+        android:divider="@null"
         android:entries="@array/messages"/>
 
 </LinearLayout>

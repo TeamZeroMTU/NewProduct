@@ -1,11 +1,11 @@
 package com.teamzeromtu.studyr.Callbacks;
 
 import android.content.Context;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.teamzeromtu.studyr.Data.Message;
 import com.teamzeromtu.studyr.R;
+import com.teamzeromtu.studyr.ViewAdapters.MessageAdapter;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class MessageFormSetter implements HttpRequestCallback<ArrayList<Message>
     @Override
     public void onSuccess(ArrayList<Message> result) {
         //MessageAdapter view = new MessageAdapter();
-        MessageAdapter messages = new MessageAdapter(context, R.layout.messege_display, result, userId);
+        MessageAdapter messages = new MessageAdapter(context, R.layout.messege_overview_display, result, userId);
         list.setAdapter(messages);
         list.setStackFromBottom(true);
 

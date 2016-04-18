@@ -15,9 +15,11 @@
     tools:showIn="@layout/activity_message_form">
 
     <ListView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="9"
+        android:dividerHeight="0dp"
+        android:divider="@null"
         android:id="@+id/listView"/>
 
     <EditText

@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.facebook.login.widget.ProfilePictureView;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
 import com.teamzeromtu.studyr.Data.Message;
 import com.teamzeromtu.studyr.Data.User;
@@ -94,7 +95,7 @@ public class Messaging extends StudyrActivity {
             public void onSuccess(ArrayList<Message> user) {
                 messages = user;
                 if(messages != null) {
-                    mesHolder.mesNum.setText(messages.size()+"");
+                    mesHolder.mesNum.setText(Integer.toString( messages.size() ));
                 }
                 else {
                     mesHolder.mesNum.setText("0");
@@ -134,10 +135,17 @@ public class Messaging extends StudyrActivity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
+            Log.d("Messaging", "getView(" + position + ")");
             Holder holder = new Holder();
 
+            View mesView = convertView;
+            if(convertView == null) {
+                mesView = getLayoutInflater().inflate(R.layout.messege_overview_display, null);
+            }
 
-            View mesView = getLayoutInflater().inflate(R.layout.messege_display,null);
+            ProfilePictureView picture = (ProfilePictureView)mesView.findViewById(R.id.profilePicture);
+            picture.setProfileId( matches.get(position).getUserID() );
+
             holder.person = (TextView) mesView.findViewById(R.id.person);
 
             holder.mesNum = (TextView) mesView.findViewById(R.id.messageNum);
