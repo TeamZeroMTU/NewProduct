@@ -113,10 +113,7 @@ public class Messaging extends StudyrActivity {
 
     private class MessagingAdapter extends BaseAdapter
     {
-        private LayoutInflater inflater;
-        public MessagingAdapter() {
-            inflater = getLayoutInflater();
-        }
+        private LayoutInflater inflater = getLayoutInflater();
         @Override
         public int getCount() {
             return Messaging.this.matchList.size();
@@ -146,23 +143,23 @@ public class Messaging extends StudyrActivity {
             ProfilePictureView picture = (ProfilePictureView) mesView.findViewById(R.id.profilePicture);
             picture.setProfileId(user.getUserID());
 
+            TextView person = (TextView) mesView.findViewById(R.id.person);
+            person.setText(user.getName());
+
             ArrayList<Message> messages = Messaging.this.messageMap.get( user );
             if(messages != null) {
                 int nMessages = messages.size();
 
-
-                TextView person = (TextView) mesView.findViewById(R.id.person);
                 TextView mesNum = (TextView) mesView.findViewById(R.id.messageNum);
 
-                person.setText(user.getName());
                 mesNum.setText(Integer.toString( nMessages ));
 
-                mesView.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        viewMessage(user.getName(), user.getUserID());
-                    }
-                });
             }
+            mesView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    viewMessage(user.getName(), user.getUserID());
+                }
+            });
 
             return mesView;
         }
