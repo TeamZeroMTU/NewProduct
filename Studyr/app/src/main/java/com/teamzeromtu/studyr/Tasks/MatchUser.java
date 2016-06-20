@@ -36,7 +36,7 @@ public class MatchUser extends AsyncTask<Void, Void, User> {
     protected User doInBackground(Void... params) {
         StringBuilder responseBuilder = new StringBuilder();
         try {
-            URL url = new URL("http://jeremypi.duckdns.org/u/" + app.userId + "/match");
+            URL url = new URL("http://" + app.backendBaseURL() + "/u/" + app.user.getUserID() + "/match");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);

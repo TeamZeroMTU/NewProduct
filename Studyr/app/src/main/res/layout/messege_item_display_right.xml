@@ -13,15 +13,25 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true" />
 
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/messageNum"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#929292"
-        android:textAlignment="viewEnd"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/person" />
+        android:layout_below="@+id/person"
+        android:layout_alignParentRight="true"
+        android:padding="12dp"
+        android:background="@drawable/turquoise_bubble_right"
+        android:id="@+id/relativeLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/messageNum"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"
+            android:paddingRight="12dp"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

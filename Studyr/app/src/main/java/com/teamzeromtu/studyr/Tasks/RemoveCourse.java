@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
 import com.teamzeromtu.studyr.Data.Course;
 import com.teamzeromtu.studyr.Data.User;
+import com.teamzeromtu.studyr.R;
 import com.teamzeromtu.studyr.StudyrApplication;
 
 import java.io.BufferedReader;
@@ -36,8 +37,8 @@ public class RemoveCourse extends AsyncTask<Void, Void, User> {
     protected User doInBackground(Void... params) {
         StringBuilder responseBuilder = new StringBuilder();
         try {
-            String id = app.userId;
-            URL url = new URL("http://jeremypi.duckdns.org/u/" + id + "/removecourse");
+            String id = app.user.getUserID();
+            URL url = new URL("http://" + app.backendBaseURL() + "/u/" + id + "/removecourse");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);

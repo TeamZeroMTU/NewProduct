@@ -39,8 +39,8 @@ public class ProfileReadWrite extends StudyrActivity {
             final String schoolStr = user.getSchool();
             if (schoolStr != null) {
                 schoolField.setText(schoolStr);
-                GetCourses loadAvailableCourses = new GetCourses(schoolStr, new AvailableCourseSetter());
                 StudyrApplication app = (StudyrApplication)getApplication();
+                GetCourses loadAvailableCourses = new GetCourses(app, schoolStr, new AvailableCourseSetter());
                 NetworkTaskManager manager = app.taskManager;
                 manager.execute( loadAvailableCourses );
             }
@@ -129,8 +129,8 @@ public class ProfileReadWrite extends StudyrActivity {
                     Log.i("ProfileReadWrite", "captured");
                     TextView textView = (TextView) v;
                     mUser.setSchool(textView.getText().toString());
-                    UpdateSchool updateSchool = new UpdateSchool(mUser, new UserSetter());
                     StudyrApplication app = (StudyrApplication)getApplication();
+                    UpdateSchool updateSchool = new UpdateSchool(app, mUser, new UserSetter());
                     NetworkTaskManager manager = app.taskManager;
                     manager.execute( updateSchool );
                     resetFocus();
@@ -207,7 +207,7 @@ public class ProfileReadWrite extends StudyrActivity {
 
     private void loadProfile(final String id) {
         StudyrApplication app = (StudyrApplication)getApplication();
-        final GetUser getProfile = new GetUser(id, new UserSetter());
+        final GetUser getProfile = new GetUser(app, id, new UserSetter());
 
         NetworkTaskManager manager = app.taskManager;
         manager.execute( getProfile );

@@ -6,7 +6,9 @@ import android.util.Log;
 import com.facebook.AccessToken;
 import com.google.gson.Gson;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
+import com.teamzeromtu.studyr.Data.User;
 import com.teamzeromtu.studyr.Exceptions.InvalidUserException;
+import com.teamzeromtu.studyr.StudyrApplication;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -20,18 +22,20 @@ import java.net.URLEncoder;
 /**
  * Created by jbdaley on 3/22/16.
  */
-public class AppUserId extends AsyncTask<Void, Void, String> {
+public class AppUser extends AsyncTask<Void, Void, User> {
 
-    private HttpRequestCallback<String> callback;
-    public AppUserId(HttpRequestCallback<String> dataCallback) {
+    private StudyrApplication app;
+    private HttpRequestCallback<User> callback;
+    public AppUser(StudyrApplication app, HttpRequestCallback<User> dataCallback) {
+        this.app = app;
         this.callback = dataCallback;
     }
     @Override
-    protected String doInBackground(Void... params) {
+    protected User doInBackground(Void... params) {
         StringBuilder responseBuilder = new StringBuilder();
         try {
-            Log.d("AppUserId", "Starting http request construction");
-            URL url = new URL("http://jeremypi.duckdns.org/me/id");
+            Log.d("AppUser", "Starting http request construction");
+            URL url = new URL("http://" + app.backendBaseURL() + "/me/user");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);
@@ -43,37 +47,38 @@ public class AppUserId extends AsyncTask<Void, Void, String> {
             StringBuilder sb = new StringBuilder();
             sb.append(URLEncoder.encode("token", "UTF-8"));
             sb.append("=");
-            Log.d("AppUserId:token", AccessToken.getCurrentAccessToken().getToken());
+            Log.d("AppUser:token", AccessToken.getCurrentAccessToken().getToken());
             sb.append(URLEncoder.encode(AccessToken.getCurrentAccessToken().getToken(), "UTF-8"));
             writer.write(sb.toString());
             writer.flush();
             writer.close();
             os.close();
             connection.connect();
-            if(connection.getResponseCode() == 201) {
+            int code = connection.getResponseCode();
+            Log.d("AppUser:code", Integer.toString( code ));
+            if(code >= 200 && code < 300) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String input;
                 while ((input = reader.readLine()) != null) {
                     responseBuilder.append(input);
                 }
                 final String jsonString = responseBuilder.toString();
-                Log.d("AppUserId:jsonString", jsonString);
-                return new Gson().fromJson(jsonString, String.class);
+                Log.d("AppUser:jsonString", jsonString);
+                return new Gson().fromJson(jsonString, User.class);
             }
-            Log.d("AppUserId:code", "Bad code!");
         } catch (Exception e) {
-            Log.e("AppUserId:e", Log.getStackTraceString( e ));
+            Log.e("AppUser:e", Log.getStackTraceString( e ));
         }
         return null;
     }
 
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(User result) {
         if(result == null) {
-            Log.d("AppUserId:id", "Null id");
+            Log.d("AppUser:user", "Null user");
             callback.onError(new InvalidUserException("") );
         } else {
-            Log.d("AppUserId:id", result);
+            Log.d("AppUser:user", "Successful login");
             callback.onSuccess( result );
         }
     }

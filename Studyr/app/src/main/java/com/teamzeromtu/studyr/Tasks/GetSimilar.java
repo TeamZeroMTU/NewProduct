@@ -35,7 +35,7 @@ public class GetSimilar extends AsyncTask<Void, Void, ArrayList<User>> {
         StringBuilder responseBuilder = new StringBuilder();
         try {
             Log.d("GetSimilar", "doInBackground()" );
-            URL url = new URL("http://jeremypi.duckdns.org/u/" + app.userId + "/similar");
+            URL url = new URL("http://" + app.backendBaseURL() + "/u/" + app.user.getUserID() + "/similar");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);

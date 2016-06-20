@@ -7,6 +7,7 @@ import com.facebook.AccessToken;
 import com.google.gson.Gson;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
 import com.teamzeromtu.studyr.Data.User;
+import com.teamzeromtu.studyr.StudyrApplication;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,9 +23,11 @@ import java.net.URLEncoder;
  */
 public class GetUser extends AsyncTask<Void, Void, User> {
 
+    private StudyrApplication app;
     private String id;
     private HttpRequestCallback<User> callback;
-    public GetUser( String id, HttpRequestCallback<User> dataCallback) {
+    public GetUser( StudyrApplication app, String id, HttpRequestCallback<User> dataCallback) {
+        this.app = app;
         this.id = id;
         this.callback = dataCallback;
     }
@@ -33,7 +36,7 @@ public class GetUser extends AsyncTask<Void, Void, User> {
         StringBuilder responseBuilder = new StringBuilder();
         try {
             Log.d("GetUser:id", id);
-            URL url = new URL("http://jeremypi.duckdns.org/u/" + id + "/info");
+            URL url = new URL("http://" + app.backendBaseURL() + "/u/" + id + "/info");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);

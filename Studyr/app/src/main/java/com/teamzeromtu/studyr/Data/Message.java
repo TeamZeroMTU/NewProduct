@@ -13,6 +13,8 @@ public class Message {
     private String receiver;
     private Date time;
 
+    public Message() {}
+
     public Message(String text, String id, String sender, String receiver, Date time) {
         this.text = text;
         this.id = id;

@@ -36,7 +36,7 @@ public class RejectUser extends AsyncTask<Void, Void, User> {
     protected User doInBackground(Void... params) {
         StringBuilder responseBuilder = new StringBuilder();
         try {
-            URL url = new URL("http://jeremypi.duckdns.org/u/" + app.userId + "/reject");
+            URL url = new URL("http://" + app.backendBaseURL() + "/u/" + app.user.getUserID() + "/reject");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);

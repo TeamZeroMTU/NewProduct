@@ -36,4 +36,6 @@
     <string name="profileNameView">Name</string>
     <string name="profileSchooLabel">School</string>
     <string name="profileCoursesLabel">Courses</string>
+
+    <string name="studyrBaseURL"></string>
 </resources>

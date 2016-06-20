@@ -6,20 +6,34 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="New Text"
         android:id="@+id/person"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textAlignment="viewStart"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true" />
 
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/messageNum"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#929292"
-        android:textAlignment="viewStart"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/person" />
+        android:layout_below="@+id/person"
+        android:layout_alignParentLeft="true"
+        android:padding="12dp"
+        android:background="@drawable/green_bubble"
+        android:id="@+id/relativeLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/messageNum"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"
+            android:textAlignment="viewStart"
+            android:layout_alignParentStart="true"
+            android:paddingRight="12dp"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

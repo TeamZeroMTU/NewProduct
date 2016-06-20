@@ -11,7 +11,7 @@ import com.facebook.login.LoginManager;
 /**
  * Created by jbdaley on 4/12/16.
  */
-public class StudyrActivity extends AppCompatActivity {
+public abstract class StudyrActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.d("StudyrActivity", "onCreateOptionsMenu");
@@ -28,7 +28,7 @@ public class StudyrActivity extends AppCompatActivity {
             {
                 Intent change = new Intent(this, ProfileReadWrite.class);
                 StudyrApplication app = (StudyrApplication)getApplication();
-                change.putExtra(ProfileReadWrite.profileId, app.userId);
+                change.putExtra(ProfileReadWrite.profileId, app.user.getUserID());
                 startActivity(change);
                 finish();
                 return true;

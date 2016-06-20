@@ -39,7 +39,7 @@ public class Messaging extends StudyrActivity {
             matches.setAdapter( adapter );
 
             for(final User user: Messaging.this.matchList) {
-                GetMessages getMes = new GetMessages(app.userId, user.getUserID(), new HttpRequestCallback<ArrayList<Message>>() {
+                GetMessages getMes = new GetMessages(app, app.user.getUserID(), user.getUserID(), new HttpRequestCallback<ArrayList<Message>>() {
                     @Override
                     public void onSuccess(ArrayList<Message> messages) {
                         Messaging.this.messageMap.put(user, messages);

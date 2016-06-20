@@ -33,7 +33,7 @@ public class GetMatches extends AsyncTask<Void, Void, ArrayList<User>> {
         StringBuilder responseBuilder = new StringBuilder();
         try {
             Log.d("GetMatches", "doInBackground()" );
-            URL url = new URL("http://jeremypi.duckdns.org/u/" + app.userId + "/matches");
+            URL url = new URL("http://" + app.backendBaseURL() + "/u/" + app.user.getUserID() + "/matches");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);

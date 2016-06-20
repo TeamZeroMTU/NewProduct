@@ -36,8 +36,8 @@ public class AddCourse extends AsyncTask<Void, Void, User> {
     protected User doInBackground(Void... params) {
         StringBuilder responseBuilder = new StringBuilder();
         try {
-            String id = app.userId;
-            URL url = new URL("http://jeremypi.duckdns.org/u/" + id + "/addcourse");
+            String id = app.user.getUserID();
+            URL url = new URL("http://" + app.backendBaseURL() + "/u/" + id + "/addcourse");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);

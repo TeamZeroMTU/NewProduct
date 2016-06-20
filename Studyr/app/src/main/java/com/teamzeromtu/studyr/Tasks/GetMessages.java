@@ -3,19 +3,13 @@ package com.teamzeromtu.studyr.Tasks;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import com.facebook.AccessToken;
-import com.facebook.FacebookCallback;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
-import com.teamzeromtu.studyr.Data.Course;
 import com.teamzeromtu.studyr.Data.Message;
-import com.teamzeromtu.studyr.Data.User;
 import com.teamzeromtu.studyr.Exceptions.InvalidUserException;
-import com.teamzeromtu.studyr.R;
+import com.teamzeromtu.studyr.StudyrApplication;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -32,18 +26,15 @@ import java.util.ArrayList;
  */
 public class GetMessages extends AsyncTask<Void, Void, ArrayList<Message>> {//public class GetUser extends AsyncTask<Void, Void, User> {
 
+    private StudyrApplication app;
     private String id;
     private String otherId;
     private HttpRequestCallback<ArrayList<Message>> callback;
 
-    public GetMessages(String newID,String otherGuysID, HttpRequestCallback<ArrayList<Message>> dataCallback) {
+    public GetMessages(StudyrApplication app, String newID,String otherGuysID, HttpRequestCallback<ArrayList<Message>> dataCallback) {
+        this.app = app;
         id = newID;
         otherId = otherGuysID;
-        callback = dataCallback;
-    }
-    public GetMessages(String newID, HttpRequestCallback<ArrayList<Message>> dataCallback) {
-        id = newID;
-        otherId = "10204805470411699";
         callback = dataCallback;
     }
     @Override
@@ -51,7 +42,7 @@ public class GetMessages extends AsyncTask<Void, Void, ArrayList<Message>> {//pu
         StringBuilder responseBuilder = new StringBuilder();
         try {
             Log.d("ExMsgSrvr:id", id);
-            URL url = new URL("http://jeremypi.duckdns.org/u/" + id + "/getmessages");
+            URL url = new URL("http://" + app.backendBaseURL() + "/u/" + id + "/getmessages");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);

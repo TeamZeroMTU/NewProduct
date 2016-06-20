@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
 import com.teamzeromtu.studyr.Data.Course;
+import com.teamzeromtu.studyr.StudyrApplication;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,9 +25,11 @@ import java.util.ArrayList;
  */
 public class GetCourses extends AsyncTask<Void, Void, ArrayList<Course>> {
 
+    private StudyrApplication app;
     private String school;
     private HttpRequestCallback<ArrayList<Course>> callback;
-    public GetCourses(String school, HttpRequestCallback<ArrayList<Course>> dataCallback) {
+    public GetCourses(StudyrApplication app, String school, HttpRequestCallback<ArrayList<Course>> dataCallback) {
+        this.app = app;
         this.school = school;
         this.callback = dataCallback;
     }
@@ -35,7 +38,7 @@ public class GetCourses extends AsyncTask<Void, Void, ArrayList<Course>> {
         StringBuilder responseBuilder = new StringBuilder();
         try {
             Log.d("GetCourses:id", school);
-            URL url = new URL("http://jeremypi.duckdns.org/s/" + school + "/courses");
+            URL url = new URL("http://" + app.backendBaseURL() + "/s/" + school + "/courses");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);

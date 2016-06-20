@@ -6,6 +6,8 @@ import android.util.Log;
 import com.facebook.AccessToken;
 import com.google.gson.Gson;
 import com.teamzeromtu.studyr.Callbacks.HttpRequestCallback;
+import com.teamzeromtu.studyr.Data.User;
+import com.teamzeromtu.studyr.StudyrApplication;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -19,17 +21,20 @@ import java.net.URLEncoder;
 /**
  * Created by jbdaley on 3/22/16.
  */
-public class CreateUser extends AsyncTask<Void, Void, String> {
+public class CreateUser extends AsyncTask<Void, Void, User> {
 
-    private HttpRequestCallback<String> callback;
-    public CreateUser(HttpRequestCallback<String> dataCallback) {
+    private StudyrApplication app;
+    private HttpRequestCallback<User> callback;
+    public CreateUser(StudyrApplication app, HttpRequestCallback<User> dataCallback) {
+        this.app = app;
         this.callback = dataCallback;
     }
     @Override
-    protected String doInBackground(Void... params) {
+    protected User doInBackground(Void... params) {
+        Log.d("CreateUser", "doInBackground()");
         StringBuilder responseBuilder = new StringBuilder();
         try {
-            URL url = new URL("http://jeremypi.duckdns.org/u/create");
+            URL url = new URL("http://" + app.backendBaseURL() + "/u/create");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);
@@ -57,7 +62,7 @@ public class CreateUser extends AsyncTask<Void, Void, String> {
                 }
                 final String jsonString = responseBuilder.toString();
                 Log.d("CreateUser:jsonString", jsonString);
-                return new Gson().fromJson(jsonString, String.class);
+                return new Gson().fromJson(jsonString, User.class);
             }
         } catch (Exception e) {
             Log.e("CreateUser:e", Log.getStackTraceString( e ));
@@ -66,12 +71,12 @@ public class CreateUser extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(User result) {
         if(result == null) {
-            Log.d("CreateUser:id", "Null id");
+            Log.d("CreateUser:user", "Null user");
             callback.onError(null);
         } else {
-            Log.d("CreateUser:id", result);
+            Log.d("CreateUser:id", "Successful user creation");
             callback.onSuccess( result );
         }
     }

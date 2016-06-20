@@ -16,8 +16,8 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.teamzeromtu.studyr.Callbacks.AppUserIdSetter;
-import com.teamzeromtu.studyr.Tasks.AppUserId;
+import com.teamzeromtu.studyr.Callbacks.AppUserSetter;
+import com.teamzeromtu.studyr.Tasks.AppUser;
 import com.teamzeromtu.studyr.Tasks.NetworkTaskManager;
 
 public class LoginActivity extends AppCompatActivity {
@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
                 if(currentAccessToken != null) {
                     StudyrApplication app = (StudyrApplication)getApplication();
-                    AppUserId getter = new AppUserId(new AppUserIdSetter(thisActivity, (StudyrApplication)getApplication()));
+                    AppUser getter = new AppUser(app, new AppUserSetter(thisActivity, app));
                     NetworkTaskManager manager = app.taskManager;
                     manager.execute( getter );
                 }
@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(com.facebook.Profile.getCurrentProfile() != null) {
             StudyrApplication app = (StudyrApplication)getApplication();
-            AppUserId getter = new AppUserId(new AppUserIdSetter(this, app));
+            AppUser getter = new AppUser(app, new AppUserSetter(this, app));
 
             NetworkTaskManager manager = app.taskManager;
             manager.execute( getter );
@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 Log.d("Login", "Success");
                 StudyrApplication app = (StudyrApplication)getApplication();
-                AppUserId getter = new AppUserId(new AppUserIdSetter(mActivity, (StudyrApplication)getApplication()));
+                AppUser getter = new AppUser(app, new AppUserSetter(mActivity, app));
                 NetworkTaskManager manager = app.taskManager;
                 manager.execute(getter);
             }
